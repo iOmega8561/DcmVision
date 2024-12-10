@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E39BB7872D084D7000426BE2 /* setup-dependencies.sh in Resources */ = {isa = PBXBuildFile; fileRef = E39BB7862D084D7000426BE2 /* setup-dependencies.sh */; };
+		E39BB8462D08521600426BE2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E39BB8452D08521600426BE2 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E3286BD22D06EE4800E95768 /* DcmVision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DcmVision.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E39BB7862D084D7000426BE2 /* setup-dependencies.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "setup-dependencies.sh"; sourceTree = "<group>"; };
+		E39BB8452D08521600426BE2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -439,7 +439,7 @@
 				E39BB7882D084DB700426BE2 /* DataSet */,
 				E39B360D2D07347D00FBCE53 /* Dependencies */,
 				E3286BD42D06EE4800E95768 /* DcmVision */,
-				E39BB7862D084D7000426BE2 /* setup-dependencies.sh */,
+				E39BB8452D08521600426BE2 /* README.md */,
 				E3286BD32D06EE4800E95768 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -518,7 +518,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E39BB7872D084D7000426BE2 /* setup-dependencies.sh in Resources */,
+				E39BB8462D08521600426BE2 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
