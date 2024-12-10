@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct DcmViewerApp: App {
+struct DcmVisionApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

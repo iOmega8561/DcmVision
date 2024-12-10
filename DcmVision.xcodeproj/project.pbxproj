@@ -11,19 +11,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E3286BD22D06EE4800E95768 /* DcmViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DcmViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3286BD22D06EE4800E95768 /* DcmVision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DcmVision.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E39BB7862D084D7000426BE2 /* setup-dependencies.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "setup-dependencies.sh"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		E3286BF52D06EEC200E95768 /* Exceptions for "DcmViewer" folder in "DcmViewer" target */ = {
+		E3286BF52D06EEC200E95768 /* Exceptions for "DcmVision" folder in "DcmVision" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Resources/Info.plist,
 			);
-			target = E3286BD12D06EE4800E95768 /* DcmViewer */;
+			target = E3286BD12D06EE4800E95768 /* DcmVision */;
 		};
-		E39B3BCB2D07349500FBCE53 /* Exceptions for "Dependencies" folder in "DcmViewer" target */ = {
+		E39B3BCB2D07349500FBCE53 /* Exceptions for "Dependencies" folder in "DcmVision" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				dcmtk/bin/cda2dcm,
@@ -394,23 +394,23 @@
 				zlib/lib/pkgconfig/zlib.pc,
 				zlib/share/man/man3/zlib.3,
 			);
-			target = E3286BD12D06EE4800E95768 /* DcmViewer */;
+			target = E3286BD12D06EE4800E95768 /* DcmVision */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		E3286BD42D06EE4800E95768 /* DcmViewer */ = {
+		E3286BD42D06EE4800E95768 /* DcmVision */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				E3286BF52D06EEC200E95768 /* Exceptions for "DcmViewer" folder in "DcmViewer" target */,
+				E3286BF52D06EEC200E95768 /* Exceptions for "DcmVision" folder in "DcmVision" target */,
 			);
-			path = DcmViewer;
+			path = DcmVision;
 			sourceTree = "<group>";
 		};
 		E39B360D2D07347D00FBCE53 /* Dependencies */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				E39B3BCB2D07349500FBCE53 /* Exceptions for "Dependencies" folder in "DcmViewer" target */,
+				E39B3BCB2D07349500FBCE53 /* Exceptions for "Dependencies" folder in "DcmVision" target */,
 			);
 			path = Dependencies;
 			sourceTree = "<group>";
@@ -438,7 +438,7 @@
 			children = (
 				E39BB7882D084DB700426BE2 /* DataSet */,
 				E39B360D2D07347D00FBCE53 /* Dependencies */,
-				E3286BD42D06EE4800E95768 /* DcmViewer */,
+				E3286BD42D06EE4800E95768 /* DcmVision */,
 				E39BB7862D084D7000426BE2 /* setup-dependencies.sh */,
 				E3286BD32D06EE4800E95768 /* Products */,
 			);
@@ -447,7 +447,7 @@
 		E3286BD32D06EE4800E95768 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E3286BD22D06EE4800E95768 /* DcmViewer.app */,
+				E3286BD22D06EE4800E95768 /* DcmVision.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -455,9 +455,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E3286BD12D06EE4800E95768 /* DcmViewer */ = {
+		E3286BD12D06EE4800E95768 /* DcmVision */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E3286BEA2D06EE4900E95768 /* Build configuration list for PBXNativeTarget "DcmViewer" */;
+			buildConfigurationList = E3286BEA2D06EE4900E95768 /* Build configuration list for PBXNativeTarget "DcmVision" */;
 			buildPhases = (
 				E3286BCE2D06EE4800E95768 /* Sources */,
 				E3286BCF2D06EE4800E95768 /* Frameworks */,
@@ -468,14 +468,14 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				E3286BD42D06EE4800E95768 /* DcmViewer */,
+				E3286BD42D06EE4800E95768 /* DcmVision */,
 				E39BB7882D084DB700426BE2 /* DataSet */,
 			);
-			name = DcmViewer;
+			name = DcmVision;
 			packageProductDependencies = (
 			);
 			productName = DicomTest;
-			productReference = E3286BD22D06EE4800E95768 /* DcmViewer.app */;
+			productReference = E3286BD22D06EE4800E95768 /* DcmVision.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -494,7 +494,7 @@
 					};
 				};
 			};
-			buildConfigurationList = E3286BCD2D06EE4800E95768 /* Build configuration list for PBXProject "DcmViewer" */;
+			buildConfigurationList = E3286BCD2D06EE4800E95768 /* Build configuration list for PBXProject "DcmVision" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -508,7 +508,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E3286BD12D06EE4800E95768 /* DcmViewer */,
+				E3286BD12D06EE4800E95768 /* DcmVision */,
 			);
 		};
 /* End PBXProject section */
@@ -565,7 +565,7 @@
 				STRIP_INSTALLED_PRODUCT = YES;
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "DcmViewer/CoreDefinitions/DcmViewer-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "DcmVision/CoreDefinitions/DcmVision-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 7;
@@ -602,7 +602,7 @@
 				STRIP_INSTALLED_PRODUCT = YES;
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "DcmViewer/CoreDefinitions/DcmViewer-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "DcmVision/CoreDefinitions/DcmVision-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 7;
 			};
@@ -730,7 +730,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E3286BCD2D06EE4800E95768 /* Build configuration list for PBXProject "DcmViewer" */ = {
+		E3286BCD2D06EE4800E95768 /* Build configuration list for PBXProject "DcmVision" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E3286BED2D06EE4900E95768 /* Debug */,
@@ -739,7 +739,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E3286BEA2D06EE4900E95768 /* Build configuration list for PBXNativeTarget "DcmViewer" */ = {
+		E3286BEA2D06EE4900E95768 /* Build configuration list for PBXNativeTarget "DcmVision" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E3286BEB2D06EE4900E95768 /* Debug */,
