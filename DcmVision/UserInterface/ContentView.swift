@@ -29,12 +29,12 @@ struct ContentView: View {
                     ForEach(1..<95) { integer in
                         
                         NavigationLink {
-                            DicomView(fileName: fileName(integer))
+                            DicomImage(fileName: fileName(integer))
                                 .navigationTitle("\(fileName(integer)).dcm")
                             
                         } label: {
                             
-                            DicomView(fileName: fileName(integer))
+                            DicomImage(fileName: fileName(integer))
                                 .frame(
                                     minWidth: 150,
                                     maxWidth: 300,
