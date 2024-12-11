@@ -9,6 +9,8 @@ import SwiftUI
 
 struct DicomService {
     
+    private let cacheDirectory: URL
+    
     private let dicomDecoder: DicomDecoder
     
     private func uiImageFromFile(_ path: String? = nil, fileName: String) throws -> UIImage {
@@ -19,9 +21,11 @@ struct DicomService {
             imageData = try .init(contentsOf: URL(fileURLWithPath: path))
             
         } else {
+            
             imageData = try .init(
-                contentsOf: URL(
-                    fileURLWithPath: NSTemporaryDirectory() + fileName + ".bmp"
+                contentsOf: cacheDirectory.appendingPathComponent(
+                    fileName,
+                    conformingTo: .bmp
                 )
             )
         }
@@ -56,5 +60,12 @@ struct DicomService {
         }
     }
     
-    init() { dicomDecoder = .init() }
+    init() {
+        cacheDirectory = FileManager.default.urls(
+            for: .cachesDirectory,
+            in: .userDomainMask
+        ).first!
+        
+        dicomDecoder = .init(cacheDirectoryURL: cacheDirectory)
+    }
 }
