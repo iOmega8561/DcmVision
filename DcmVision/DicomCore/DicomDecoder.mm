@@ -7,8 +7,14 @@
 
 #import <Foundation/Foundation.h>
 #import "DicomDecoder.h"
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Weverything"
+
 #include "dcmtk/dcmimgle/dcmimage.h"
 #include "dcmtk/dcmdata/dcdict.h"
+
+#pragma clang diagnostic pop
 
 @implementation DicomDecoder
 
