@@ -6,4 +6,4 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DcmDecoder.h"
+#import "DicomDecoder.h"
