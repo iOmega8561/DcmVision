@@ -12,7 +12,7 @@
 
 @implementation DcmDecoder
 
-- (NSString *)toPngFrom:(NSString *)filePath {
+- (NSString *)toPngFrom:(NSString *)filePath named:(NSString *)fileName {
     
     const char *cFilePath = [filePath UTF8String];
 
@@ -24,7 +24,8 @@
     }
 
     NSString *outputPath = [NSTemporaryDirectory()
-                             stringByAppendingPathComponent:@"output.bmp"];
+                            stringByAppendingPathComponent: [NSString
+                                                             stringWithFormat:@"%@.bmp", fileName]];
     
     if (image->writeBMP([outputPath UTF8String])) {
         return outputPath;
