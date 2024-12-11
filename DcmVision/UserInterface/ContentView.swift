@@ -6,9 +6,6 @@
 //
 
 import SwiftUI
-import RealityKit
-
-import SwiftUI
 
 struct ContentView: View {
     
@@ -17,6 +14,10 @@ struct ContentView: View {
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
+    
+    private var fileName: (Int) -> String = { integer in
+        return "1-\(String(format: "%02d", integer))"
+    }
     
     var body: some View {
         NavigationStack {
@@ -27,25 +28,27 @@ struct ContentView: View {
                     
                     ForEach(1..<95) { integer in
                         
-                        NavigationLink(destination: DicomView(
-                            fileName: "1-\(String(format: "%02d", integer))"
-                        )) {
-                            ZStack {
-                                
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color.black)
-                                
-                                DicomView(
-                                    fileName: "1-\(String(format: "%02d", integer))"
+                        NavigationLink {
+                            DicomView(fileName: fileName(integer))
+                                .navigationTitle("\(fileName(integer)).dcm")
+                            
+                        } label: {
+                            
+                            DicomView(fileName: fileName(integer))
+                                .frame(
+                                    minWidth: 150,
+                                    maxWidth: 300,
+                                    minHeight: 150,
+                                    maxHeight: 300
                                 )
-                            }
-                            .frame(width: 300, height: 300)
                         }
                         .buttonStyle(.plain)
+                        .contentShape(Rectangle())
+                        .hoverEffect(.highlight)
                     }
                 }
-                .frame(minWidth: 950, minHeight: 600)
             }
+            .navigationTitle("DICOM Data Set")
         }
     }
 }

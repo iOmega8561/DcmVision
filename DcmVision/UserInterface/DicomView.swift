@@ -80,7 +80,7 @@ struct DicomView: View {
             return try loadExistingDcmImage()
             
         } catch {
-    
+            
             guard let url = Bundle.main.url(
                 forResource: fileName,
                 withExtension: "dcm"

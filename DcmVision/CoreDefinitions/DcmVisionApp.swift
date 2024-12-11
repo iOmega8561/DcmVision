@@ -12,7 +12,11 @@ struct DcmVisionApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                
+                .frame(
+                    minWidth: 500,
+                    maxWidth: 1250,
+                    minHeight: 100
+                )
         }
         .windowResizability(.contentSize)
      }
