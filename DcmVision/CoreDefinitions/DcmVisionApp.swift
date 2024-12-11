@@ -1,6 +1,6 @@
 //
-//  DicomTestApp.swift
-//  DicomTest
+//  DcmVisionApp.mm
+//  DcmVision
 //
 //  Created by Giuseppe Rocco on 09/12/24.
 //
