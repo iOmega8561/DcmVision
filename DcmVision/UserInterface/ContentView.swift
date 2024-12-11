@@ -11,43 +11,41 @@ import RealityKit
 import SwiftUI
 
 struct ContentView: View {
-    @State private var dicomImage: Image? = nil
-    @State private var errorMessage: String? = nil
+    
+    private let gridItemLayout = [
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
     
     var body: some View {
-        ZStack {
-            if let dicomImage = dicomImage {
-                dicomImage
-                    .resizable()
-                    .scaledToFit()
-            } else if let errorMessage = errorMessage {
-                Text("Errore: \(errorMessage)")
-                    .foregroundColor(.red)
-            } else {
-                ProgressView("Caricamento...")
+        NavigationStack {
+            
+            ScrollView {
+                
+                LazyVGrid(columns: gridItemLayout, spacing: 10) {
+                    
+                    ForEach(1..<95) { integer in
+                        
+                        NavigationLink(destination: DicomView(
+                            fileName: "1-\(String(format: "%02d", integer))"
+                        )) {
+                            ZStack {
+                                
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Color.black)
+                                
+                                DicomView(
+                                    fileName: "1-\(String(format: "%02d", integer))"
+                                )
+                            }
+                            .frame(width: 300, height: 300)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .frame(minWidth: 950, minHeight: 600)
             }
         }
-        .onAppear { loadDICOMImage() }
-    }
-    
-    private func loadDICOMImage() {
-        // Assumiamo che il file si chiami "immagine.dcm" e sia nella cartella Resources
-        guard let url = Bundle.main.url(forResource: "1-01", withExtension: "dcm") else {
-            self.errorMessage = "File DICOM non trovato."
-            return
-        }
-        
-        let imagePath = DcmDecoder().toPng(
-            from: url.path(percentEncoded: false)
-        )
-        
-        if let imagePath,
-           let imageData = try? Data(contentsOf: URL(fileURLWithPath: imagePath)),
-           let uiImage = UIImage(data: imageData) {
-            self.dicomImage = Image(uiImage: uiImage)
-        } else {
-            errorMessage = "Failed to load decoded image"
-        }
-        
     }
 }

@@ -10,6 +10,6 @@
 @property (nonatomic, strong) NSString *dicomDictPath;
 
 // Expose a method to read and decode a DICOM file.
-- (NSString *)toPngFrom:(NSString *)filePath;
+- (NSString *)toPngFrom:(NSString *)filePath named:(NSString *)fileName;
 
 @end
