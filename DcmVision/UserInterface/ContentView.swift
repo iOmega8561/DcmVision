@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  DicomTest
+//  DcmVision
 //
 //  Created by Giuseppe Rocco on 09/12/24.
 //
@@ -37,8 +37,8 @@ struct ContentView: View {
             return
         }
         
-        let imagePath = DcmDecoder.toPng(
-            url.path(percentEncoded: false)
+        let imagePath = DcmDecoder().toPng(
+            from: url.path(percentEncoded: false)
         )
         
         if let imagePath,
