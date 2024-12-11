@@ -43,8 +43,6 @@ struct ContentView: View {
                                 )
                         }
                         .buttonStyle(.plain)
-                        .contentShape(Rectangle())
-                        .hoverEffect(.highlight)
                     }
                 }
             }
