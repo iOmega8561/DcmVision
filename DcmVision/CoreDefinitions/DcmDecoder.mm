@@ -1,6 +1,6 @@
 //
-//  dmctk-wrapper.mm
-//  DicomTest
+//  DcmDecoder.mm
+//  DcmVision
 //
 //  Created by Giuseppe Rocco on 09/12/24.
 //
@@ -9,28 +9,13 @@
 #import "DcmDecoder.h"
 #include "dcmtk/dcmimgle/dcmimage.h"
 #include "dcmtk/dcmdata/dcdict.h"
-// DCMTK includes for decoding images
 
 @implementation DcmDecoder
 
-+ (NSString *)toPng:(NSString *)filePath {
+- (NSString *)toPngFrom:(NSString *)filePath {
     
-    // Set the path to the dicom.dic file in the app bundle
-    NSString *dictionaryPath = [[NSBundle mainBundle] pathForResource:@"dicom" ofType:@"dic"];
-    
-    NSLog(@"File path: %@", dictionaryPath);
-    
-    if (dictionaryPath) {
-        setenv("DCMDICTPATH", [dictionaryPath UTF8String], 1);
-    } else {
-        NSLog(@"Error: dicom.dic file not found in bundle");
-        return nil;
-    }
-    
-    // Convert NSString to C++ string
     const char *cFilePath = [filePath UTF8String];
 
-    // Use DCMTK to read the DICOM file
     DicomImage *image = new DicomImage(cFilePath);
     
     if (image == nullptr || image->getStatus() != EIS_Normal) {
@@ -38,14 +23,33 @@
         return nil;
     }
 
-    // Save the decoded image to a temporary location
-    NSString *outputPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"output.bmp"];
+    NSString *outputPath = [NSTemporaryDirectory()
+                             stringByAppendingPathComponent:@"output.bmp"];
     
     if (image->writeBMP([outputPath UTF8String])) {
         return outputPath;
     }
 
     return nil;
+}
+
+- (instancetype) init {
+    
+    self = [super init];
+    
+    NSString *dictionaryPath = [[NSBundle mainBundle]
+                                  pathForResource:@"dicom"
+                                  ofType:@"dic"];
+    
+    if (self && dictionaryPath) {
+        _dicomDictPath = dictionaryPath;
+        setenv("DCMDICTPATH", [_dicomDictPath UTF8String], 1);
+        
+    } else if (self) {
+        NSLog(@"Error: dicom.dic file not found in bundle");
+    }
+    
+    return self;
 }
 
 @end
