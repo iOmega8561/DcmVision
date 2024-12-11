@@ -1,5 +1,8 @@
 //
-//  Use this file to import your target's public headers that you would like to expose to Swift.
+//  DcmVision-Bridging-Header.h
+//  DcmVision
+//
+//  Created by Giuseppe Rocco on 09/12/24.
 //
 
 #import <Foundation/Foundation.h>
