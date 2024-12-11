@@ -1,10 +1,15 @@
 //
-//  Use this file to import your target's public headers that you would like to expose to Swift.
+//  DcmDecoder.h
+//  DcmVision
+//
+//  Created by Giuseppe Rocco on 09/12/24.
 //
 
 @interface DcmDecoder : NSObject
 
+@property (nonatomic, strong) NSString *dicomDictPath;
+
 // Expose a method to read and decode a DICOM file.
-+ (NSString *)toPng:(NSString *)filePath;
+- (NSString *)toPngFrom:(NSString *)filePath;
 
 @end
