@@ -7,7 +7,7 @@ There are a few steps needed to get this working, that require further explanati
 
 ## Requirements
 - visionOS 2.0+
-- XCode 16+
+- Xcode 16+
 - Patience and time to spare
 
 ## Getting Started
@@ -37,4 +37,7 @@ To do that, many dependencies of DCMTK also need to be compiled targeting vision
 Create a directory named <strong>DataSet</strong> located at repository root and copy all your .dcm files inside of it
 
 ### Finalizing
-Build the XCode project and enjoy!
+Build the Xcode project and enjoy!
+
+## Contributors
+- [Giuseppe Rocco](https://github.com/iOmega8561): Dependencies setup and initial project package
