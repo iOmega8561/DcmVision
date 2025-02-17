@@ -3,6 +3,9 @@ SCRIPT=$(readlink -f $0)
 # Absolute path this script is in.
 SCRIPTPATH=`dirname $SCRIPT`
 
+#Change this to "os" to build for Apple Vision Pro (real device)
+XRSDK=simulator
+
 cd $SCRIPTPATH
 
 # LIBPNG
@@ -17,7 +20,7 @@ if [ ! -d "libpng" ]; then
     mkdir build && cd build && cmake .. \
         -DCMAKE_SYSTEM_NAME=Darwin \
         -DCMAKE_OSX_ARCHITECTURES=arm64 \
-        -DCMAKE_OSX_SYSROOT=$(xcrun --sdk xros --show-sdk-path) \
+        -DCMAKE_OSX_SYSROOT=$(xcrun --sdk xr$XRSDK --show-sdk-path) \
         -DCMAKE_INSTALL_PREFIX=$SCRIPTPATH/libpng
     
     make && make install && make clean && cd ../..
@@ -37,7 +40,7 @@ if [ ! -d "openssl" ]; then
     ./Configure ios64-cross \
       no-shared \
       --prefix=$SCRIPTPATH/openssl \
-      -isysroot $(xcrun --sdk xros --show-sdk-path)
+      -isysroot $(xcrun --sdk xr$XRSDK --show-sdk-path)
     
     make && make install && make clean && cd ..
 fi
@@ -53,7 +56,7 @@ if [ ! -d "zlib" ]; then
     
     mkdir zlib && cd zlib-src
     
-    SDKROOT=$(xcrun --sdk xros --show-sdk-path) \
+    SDKROOT=$(xcrun --sdk xr$XRSDK --show-sdk-path) \
     CC="clang -isysroot $SDKROOT -arch arm64" \
     ./configure \
       --static \
@@ -79,7 +82,7 @@ if [ ! -d "dcmtk" ]; then
       -DBUILD_SHARED_LIBS=OFF \
       -DCMAKE_SYSTEM_NAME=Darwin \
       -DCMAKE_OSX_ARCHITECTURES=arm64 \
-      -DCMAKE_OSX_SYSROOT=$(xcrun --sdk xros --show-sdk-path) \
+      -DCMAKE_OSX_SYSROOT=$(xcrun --sdk xr$XRSDK --show-sdk-path) \
       -DCMAKE_INSTALL_PREFIX=$SCRIPTPATH/dcmtk \
       -DPNG_LIBRARY=$SCRIPTPATH/libpng/lib/libpng.a \
       -DPNG_PNG_INCLUDE_DIR=$SCRIPTPATH/libpng/include \
@@ -94,3 +97,55 @@ if [ ! -d "dcmtk" ]; then
 fi
 
 rm -fr dcmtk-src
+
+# Visualization Toolkit
+if [ ! -d "vtk-compiletools" ]; then
+    
+    if [ ! -d "vtk-src" ]; then
+        git clone https://gitlab.kitware.com/vtk/vtk vtk-src
+    fi
+
+    mkdir vtk-compiletools && mkdir -p vtk-src/build-ct
+
+    cmake -S $SCRIPTPATH/vtk-src \
+        -B $SCRIPTPATH/vtk-src/build-ct \
+        -DVTK_BUILD_COMPILE_TOOLS_ONLY=ON \
+        -DCMAKE_INSTALL_PREFIX=$SCRIPTPATH/vtk-compiletools
+    
+    cmake --build $SCRIPTPATH/vtk-src/build-ct \
+          --config Release \
+          --target install
+fi
+
+if [ ! -d "vtk" ]; then
+
+    mkdir vtk && mkdir -p vtk-src/build && cd vtk-src/build
+    
+    for i in {1..2}; do
+        cmake .. \
+          -DBUILD_SHARED_LIBS=OFF \
+          -DCMAKE_SYSTEM_NAME=Darwin \
+          -DCMAKE_OSX_ARCHITECTURES=arm64 \
+          -DCMAKE_OSX_SYSROOT=$(xcrun --sdk xr$XRSDK --show-sdk-path) \
+          -DCMAKE_INSTALL_PREFIX=$SCRIPTPATH/vtk \
+          -DVTKCompileTools_DIR=$SCRIPTPATH/vtk-compiletools/lib/cmake/vtkcompiletools-9.4 \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DBUILD_SHARED_LIBS=OFF \
+          -DVTK_BUILD_TESTING=OFF \
+          -DVTK_BUILD_EXAMPLES=OFF \
+          -DVTK_USE_COCOA=OFF \
+          -DVTK_RENDERING_COCOA=OFF \
+          -DVTK_MODULE_VTKRENDERINGCOCOA=OFF \
+          -DVTK_DEFAULT_RENDER_WINDOW_HEADLESS=ON \
+          -DVTK_MODULE_ENABLE_VTKRenderingOpenGL2=OFF \
+          -DVTK_MODULE_ENABLE_VTKRenderingMetal=ON \
+          -DVTK_RENDERING_BACKEND=None \
+          -DVTK_MODULE_ENABLE_VTKRenderingContextOpenGL2=OFF \
+          -DVTK_MODULE_ENABLE_VTKRenderingCocoa=OFF \
+          -DVTK_GROUP_ENABLE_Rendering=NO
+    done
+        
+    cmake --build . --config Release && cmake --install .
+fi
+
+rm -fr vtk-src
