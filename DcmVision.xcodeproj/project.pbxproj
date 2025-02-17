@@ -6,13 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		E39BB8462D08521600426BE2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E39BB8452D08521600426BE2 /* README.md */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
 		E3286BD22D06EE4800E95768 /* DcmVision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DcmVision.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E39BB8452D08521600426BE2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		E3CF6BF52D637FD60003E156 /* setup-dependencies.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "setup-dependencies.sh"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -20,379 +17,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Resources/Info.plist,
-			);
-			target = E3286BD12D06EE4800E95768 /* DcmVision */;
-		};
-		E39B3BCB2D07349500FBCE53 /* Exceptions for "Dependencies" folder in "DcmVision" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				dcmtk/bin/cda2dcm,
-				dcmtk/bin/dcm2cda,
-				dcmtk/bin/dcm2img,
-				dcmtk/bin/dcm2json,
-				dcmtk/bin/dcm2pnm,
-				dcmtk/bin/dcm2xml,
-				dcmtk/bin/dcmcjpeg,
-				dcmtk/bin/dcmcjpls,
-				dcmtk/bin/dcmconv,
-				dcmtk/bin/dcmcrle,
-				dcmtk/bin/dcmdjpeg,
-				dcmtk/bin/dcmdjpls,
-				dcmtk/bin/dcmdrle,
-				dcmtk/bin/dcmdspfn,
-				dcmtk/bin/dcmdump,
-				dcmtk/bin/dcmftest,
-				dcmtk/bin/dcmgpdir,
-				dcmtk/bin/dcmicmp,
-				dcmtk/bin/dcmj2pnm,
-				dcmtk/bin/dcml2pnm,
-				dcmtk/bin/dcmmkcrv,
-				dcmtk/bin/dcmmkdir,
-				dcmtk/bin/dcmmklut,
-				dcmtk/bin/dcmodify,
-				dcmtk/bin/dcmp2pgm,
-				dcmtk/bin/dcmprscp,
-				dcmtk/bin/dcmprscu,
-				dcmtk/bin/dcmpschk,
-				dcmtk/bin/dcmpsmk,
-				dcmtk/bin/dcmpsprt,
-				dcmtk/bin/dcmpsrcv,
-				dcmtk/bin/dcmpssnd,
-				dcmtk/bin/dcmqridx,
-				dcmtk/bin/dcmqrscp,
-				dcmtk/bin/dcmqrti,
-				dcmtk/bin/dcmquant,
-				dcmtk/bin/dcmrecv,
-				dcmtk/bin/dcmscale,
-				dcmtk/bin/dcmsend,
-				dcmtk/bin/dcmsign,
-				dcmtk/bin/dcod2lum,
-				dcmtk/bin/dconvlum,
-				dcmtk/bin/drtdump,
-				dcmtk/bin/dsr2html,
-				dcmtk/bin/dsr2xml,
-				dcmtk/bin/dsrdump,
-				dcmtk/bin/dump2dcm,
-				dcmtk/bin/echoscu,
-				dcmtk/bin/findscu,
-				dcmtk/bin/getscu,
-				dcmtk/bin/img2dcm,
-				dcmtk/bin/mkcsmapper,
-				dcmtk/bin/mkesdb,
-				dcmtk/bin/movescu,
-				dcmtk/bin/pdf2dcm,
-				dcmtk/bin/stl2dcm,
-				dcmtk/bin/storescp,
-				dcmtk/bin/storescu,
-				dcmtk/bin/termscu,
-				dcmtk/bin/wlmscpfs,
-				dcmtk/bin/xml2dcm,
-				dcmtk/bin/xml2dsr,
-				"dcmtk/etc/dcmtk-3.6.8-DEV/consolog.cfg",
-				"dcmtk/etc/dcmtk-3.6.8-DEV/dcmpstat.cfg",
-				"dcmtk/etc/dcmtk-3.6.8-DEV/dcmqrprf.cfg",
-				"dcmtk/etc/dcmtk-3.6.8-DEV/dcmqrscp.cfg",
-				"dcmtk/etc/dcmtk-3.6.8-DEV/filelog.cfg",
-				"dcmtk/etc/dcmtk-3.6.8-DEV/logger.cfg",
-				"dcmtk/etc/dcmtk-3.6.8-DEV/printers.cfg",
-				"dcmtk/etc/dcmtk-3.6.8-DEV/storescp.cfg",
-				"dcmtk/etc/dcmtk-3.6.8-DEV/storescu.cfg",
-				dcmtk/include/dcmtk/ofstd/diag/arrybnds.def,
-				dcmtk/include/dcmtk/ofstd/diag/asincond.def,
-				dcmtk/include/dcmtk/ofstd/diag/cnvrsn.def,
-				dcmtk/include/dcmtk/ofstd/diag/constexp.def,
-				dcmtk/include/dcmtk/ofstd/diag/ignrattr.def,
-				dcmtk/include/dcmtk/ofstd/diag/memacces.def,
-				dcmtk/include/dcmtk/ofstd/diag/mmtag.def,
-				dcmtk/include/dcmtk/ofstd/diag/nsdfti.def,
-				dcmtk/include/dcmtk/ofstd/diag/overflow.def,
-				dcmtk/include/dcmtk/ofstd/diag/pessmove.def,
-				dcmtk/include/dcmtk/ofstd/diag/piof.def,
-				dcmtk/include/dcmtk/ofstd/diag/pop.def,
-				dcmtk/include/dcmtk/ofstd/diag/push.def,
-				dcmtk/include/dcmtk/ofstd/diag/restrict.def,
-				dcmtk/include/dcmtk/ofstd/diag/shadow.def,
-				dcmtk/include/dcmtk/ofstd/diag/signcmp.def,
-				dcmtk/include/dcmtk/ofstd/diag/slfassov.def,
-				dcmtk/include/dcmtk/ofstd/diag/stralias.def,
-				dcmtk/include/dcmtk/ofstd/diag/stringop.def,
-				dcmtk/include/dcmtk/ofstd/diag/unarymin.def,
-				dcmtk/include/dcmtk/ofstd/diag/unreachb.def,
-				dcmtk/include/dcmtk/ofstd/diag/unrefprm.def,
-				dcmtk/include/dcmtk/ofstd/diag/useafree.def,
-				dcmtk/include/dcmtk/ofstd/diag/vsdeclpd.def,
-				dcmtk/include/dcmtk/ofstd/diag/vsobjdes.def,
-				dcmtk/include/dcmtk/ofstd/diag/vsprfw.def,
-				dcmtk/lib/cmake/dcmtk/DCMTKConfig.cmake,
-				dcmtk/lib/cmake/dcmtk/DCMTKConfigVersion.cmake,
-				"dcmtk/lib/cmake/dcmtk/DCMTKTargets-release.cmake",
-				dcmtk/lib/cmake/dcmtk/DCMTKTargets.cmake,
-				dcmtk/lib/libcmr.a,
-				dcmtk/lib/libdcmdata.a,
-				dcmtk/lib/libdcmdsig.a,
-				dcmtk/lib/libdcmect.a,
-				dcmtk/lib/libdcmfg.a,
-				dcmtk/lib/libdcmimage.a,
-				dcmtk/lib/libdcmimgle.a,
-				dcmtk/lib/libdcmiod.a,
-				dcmtk/lib/libdcmjpeg.a,
-				dcmtk/lib/libdcmjpls.a,
-				dcmtk/lib/libdcmnet.a,
-				dcmtk/lib/libdcmpmap.a,
-				dcmtk/lib/libdcmpstat.a,
-				dcmtk/lib/libdcmqrdb.a,
-				dcmtk/lib/libdcmrt.a,
-				dcmtk/lib/libdcmseg.a,
-				dcmtk/lib/libdcmsr.a,
-				dcmtk/lib/libdcmtkcharls.a,
-				dcmtk/lib/libdcmtls.a,
-				dcmtk/lib/libdcmtract.a,
-				dcmtk/lib/libdcmwlm.a,
-				dcmtk/lib/libdcmxml.a,
-				dcmtk/lib/libi2d.a,
-				dcmtk/lib/libijg8.a,
-				dcmtk/lib/libijg12.a,
-				dcmtk/lib/libijg16.a,
-				dcmtk/lib/liboficonv.a,
-				dcmtk/lib/liboflog.a,
-				dcmtk/lib/libofstd.a,
-				dcmtk/lib/pkgconfig/dcmtk.pc,
-				"dcmtk/share/dcmtk-3.6.8-DEV/acrnema.dic",
-				"dcmtk/share/dcmtk-3.6.8-DEV/camera.lut",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/charset.pivot.pvdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/CP/CP936EXT%UCS.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/CP/UCS%CP936EXT.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/GB/GB2312%UCS.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/GB/GB2312EXT%UCS.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/GB/GB2312GBK%UCS.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/GB/GB2312UDA1%UCS.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/GB/GB2312UDA2%UCS.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/GB/GB18030%UCS@BMP.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/GB/GBKEXT%UCS.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/GB/GBKUDA%UCS.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/GB/UCS@BMP%GB18030.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/GB/UCS%GB2312.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/GB/UCS%GB2312EXT.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/GB/UCS%GB2312UDA1.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/GB/UCS%GB2312UDA2.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/GB/UCS%GBKEXT.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/GB/UCS%GBKUDA.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/ISO-8859/ISO-8859-2%UCS.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/ISO-8859/ISO-8859-3%UCS.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/ISO-8859/ISO-8859-4%UCS.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/ISO-8859/ISO-8859-5%UCS.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/ISO-8859/ISO-8859-6%UCS.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/ISO-8859/ISO-8859-7%UCS.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/ISO-8859/ISO-8859-8%UCS.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/ISO-8859/ISO-8859-9%UCS.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/ISO-8859/ISO-8859-11%UCS.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/ISO-8859/ISO-8859-15%UCS.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/ISO-8859/UCS%ISO-8859-2.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/ISO-8859/UCS%ISO-8859-3.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/ISO-8859/UCS%ISO-8859-4.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/ISO-8859/UCS%ISO-8859-5.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/ISO-8859/UCS%ISO-8859-6.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/ISO-8859/UCS%ISO-8859-7.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/ISO-8859/UCS%ISO-8859-8.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/ISO-8859/UCS%ISO-8859-9.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/ISO-8859/UCS%ISO-8859-11.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/ISO-8859/UCS%ISO-8859-15.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/ISO646/ISO646-JP%UCS.646",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/ISO646/ISO646-US%UCS.646",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/JIS/JISX0201-KANA%UCS.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/JIS/JISX0208@1990%UCS.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/JIS/JISX0212%UCS.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/JIS/UCS%JISX0201-KANA.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/JIS/UCS%JISX0208@1990.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/JIS/UCS%JISX0212.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/KS/KSC5601HANGUL%UCS.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/KS/KSC5601HANJA%UCS.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/KS/UCS%KSC5601HANGUL.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/KS/UCS%KSC5601HANJA.mps",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/mapper.dir",
-				"dcmtk/share/dcmtk-3.6.8-DEV/csmapper/mapper.dir.db",
-				"dcmtk/share/dcmtk-3.6.8-DEV/dcm2xml.dtd",
-				"dcmtk/share/dcmtk-3.6.8-DEV/dicom.dic",
-				"dcmtk/share/dcmtk-3.6.8-DEV/diconde.dic",
-				"dcmtk/share/dcmtk-3.6.8-DEV/dsr2xml.xsd",
-				"dcmtk/share/dcmtk-3.6.8-DEV/dumppat.txt",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/esdb.alias.db",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/esdb.dir.db",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/EUC/EUC-CN.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/EUC/EUC-KR.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/GB/GB18030.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/GB/GBK.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/ISO-8859/ISO-8859-1.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/ISO-8859/ISO-8859-2.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/ISO-8859/ISO-8859-3.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/ISO-8859/ISO-8859-4.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/ISO-8859/ISO-8859-5.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/ISO-8859/ISO-8859-6.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/ISO-8859/ISO-8859-7.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/ISO-8859/ISO-8859-8.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/ISO-8859/ISO-8859-9.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/ISO-8859/ISO-8859-11.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/ISO-8859/ISO-8859-15.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/ISO646/ISO646-US.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/MISC/JISX0201-KANA.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/MISC/JISX0208@1990.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/MISC/JISX0212.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/MISC/Shift_JIS.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/UTF/UTF-8.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/UTF/UTF-16-INTERNAL.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/UTF/UTF-16-SWAPPED.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/UTF/UTF-16.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/UTF/UTF-16BE.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/UTF/UTF-16LE.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/UTF/UTF-32-INTERNAL.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/UTF/UTF-32-SWAPPED.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/UTF/UTF-32.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/UTF/UTF-32BE.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/esdb/UTF/UTF-32LE.esdb",
-				"dcmtk/share/dcmtk-3.6.8-DEV/monitor.lut",
-				"dcmtk/share/dcmtk-3.6.8-DEV/philips.lut",
-				"dcmtk/share/dcmtk-3.6.8-DEV/printer.lut",
-				"dcmtk/share/dcmtk-3.6.8-DEV/private.dic",
-				"dcmtk/share/dcmtk-3.6.8-DEV/report.css",
-				"dcmtk/share/dcmtk-3.6.8-DEV/reportx.css",
-				"dcmtk/share/dcmtk-3.6.8-DEV/SC.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/scanner.lut",
-				"dcmtk/share/dcmtk-3.6.8-DEV/VLP.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistdb/OFFIS/lockfile",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistdb/OFFIS/wklist1.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistdb/OFFIS/wklist2.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistdb/OFFIS/wklist3.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistdb/OFFIS/wklist4.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistdb/OFFIS/wklist5.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistdb/OFFIS/wklist6.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistdb/OFFIS/wklist7.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistdb/OFFIS/wklist8.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistdb/OFFIS/wklist9.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistdb/OFFIS/wklist10.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistdb/README",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistqry/wlistqry0.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistqry/wlistqry1.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistqry/wlistqry2.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistqry/wlistqry3.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistqry/wlistqry4.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistqry/wlistqry5.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistqry/wlistqry6.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistqry/wlistqry7.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistqry/wlistqry8.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistqry/wlistqry9.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistqry/wlistqry10.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistqry/wlistqry11.dump",
-				"dcmtk/share/dcmtk-3.6.8-DEV/wlistqry/wlistqry12.dump",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/ANNOUNCE",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/asconfig.txt",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.301",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.302",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.310",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.311",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.312",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.320",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.321",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.330",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.331",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.340",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.341",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.342",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.350",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.351",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.352",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.353",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.354",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.360",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.362",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.363",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.364",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.365",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.366",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.367",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CHANGES.368",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/ciphers.txt",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/config.txt",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/COPYRIGHT",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/CREDITS",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/datadict.txt",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/dcmqrcnf.txt",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/dcmqrset.txt",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/dirstruc.txt",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/envvars.txt",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/FAQ",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/HISTORY",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/macros.txt",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/modules.txt",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/randseed.txt",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/testing.txt",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/VERSION",
-				"dcmtk/share/doc/dcmtk-3.6.8-DEV/wlmsetup.txt",
-				dcmtk/share/man/man1/cda2dcm.1,
-				dcmtk/share/man/man1/dcm2cda.1,
-				dcmtk/share/man/man1/dcm2img.1,
-				dcmtk/share/man/man1/dcm2json.1,
-				dcmtk/share/man/man1/dcm2pdf.1,
-				dcmtk/share/man/man1/dcm2pnm.1,
-				dcmtk/share/man/man1/dcm2xml.1,
-				dcmtk/share/man/man1/dcmcjpeg.1,
-				dcmtk/share/man/man1/dcmcjpls.1,
-				dcmtk/share/man/man1/dcmconv.1,
-				dcmtk/share/man/man1/dcmcrle.1,
-				dcmtk/share/man/man1/dcmdjpeg.1,
-				dcmtk/share/man/man1/dcmdjpls.1,
-				dcmtk/share/man/man1/dcmdrle.1,
-				dcmtk/share/man/man1/dcmdspfn.1,
-				dcmtk/share/man/man1/dcmdump.1,
-				dcmtk/share/man/man1/dcmftest.1,
-				dcmtk/share/man/man1/dcmgpdir.1,
-				dcmtk/share/man/man1/dcmicmp.1,
-				dcmtk/share/man/man1/dcmj2pnm.1,
-				dcmtk/share/man/man1/dcml2pnm.1,
-				dcmtk/share/man/man1/dcmmkcrv.1,
-				dcmtk/share/man/man1/dcmmkdir.1,
-				dcmtk/share/man/man1/dcmmklut.1,
-				dcmtk/share/man/man1/dcmodify.1,
-				dcmtk/share/man/man1/dcmp2pgm.1,
-				dcmtk/share/man/man1/dcmprscp.1,
-				dcmtk/share/man/man1/dcmprscu.1,
-				dcmtk/share/man/man1/dcmpschk.1,
-				dcmtk/share/man/man1/dcmpsmk.1,
-				dcmtk/share/man/man1/dcmpsprt.1,
-				dcmtk/share/man/man1/dcmpsrcv.1,
-				dcmtk/share/man/man1/dcmpssnd.1,
-				dcmtk/share/man/man1/dcmqridx.1,
-				dcmtk/share/man/man1/dcmqrscp.1,
-				dcmtk/share/man/man1/dcmqrti.1,
-				dcmtk/share/man/man1/dcmquant.1,
-				dcmtk/share/man/man1/dcmrecv.1,
-				dcmtk/share/man/man1/dcmscale.1,
-				dcmtk/share/man/man1/dcmsend.1,
-				dcmtk/share/man/man1/dcmsign.1,
-				dcmtk/share/man/man1/dcod2lum.1,
-				dcmtk/share/man/man1/dconvlum.1,
-				dcmtk/share/man/man1/drtdump.1,
-				dcmtk/share/man/man1/dsr2html.1,
-				dcmtk/share/man/man1/dsr2xml.1,
-				dcmtk/share/man/man1/dsrdump.1,
-				dcmtk/share/man/man1/dump2dcm.1,
-				dcmtk/share/man/man1/echoscu.1,
-				dcmtk/share/man/man1/findscu.1,
-				dcmtk/share/man/man1/getscu.1,
-				dcmtk/share/man/man1/img2dcm.1,
-				dcmtk/share/man/man1/mkcsmapper.1,
-				dcmtk/share/man/man1/mkesdb.1,
-				dcmtk/share/man/man1/movescu.1,
-				dcmtk/share/man/man1/pdf2dcm.1,
-				dcmtk/share/man/man1/stl2dcm.1,
-				dcmtk/share/man/man1/storescp.1,
-				dcmtk/share/man/man1/storescu.1,
-				dcmtk/share/man/man1/termscu.1,
-				dcmtk/share/man/man1/wlmscpfs.1,
-				dcmtk/share/man/man1/xml2dcm.1,
-				dcmtk/share/man/man1/xml2dsr.1,
-				zlib/lib/libz.a,
-				zlib/lib/pkgconfig/zlib.pc,
-				zlib/share/man/man3/zlib.3,
 			);
 			target = E3286BD12D06EE4800E95768 /* DcmVision */;
 		};
@@ -405,19 +29,6 @@
 				E3286BF52D06EEC200E95768 /* Exceptions for "DcmVision" folder in "DcmVision" target */,
 			);
 			path = DcmVision;
-			sourceTree = "<group>";
-		};
-		E39B360D2D07347D00FBCE53 /* Dependencies */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				E39B3BCB2D07349500FBCE53 /* Exceptions for "Dependencies" folder in "DcmVision" target */,
-			);
-			path = Dependencies;
-			sourceTree = "<group>";
-		};
-		E39BB7882D084DB700426BE2 /* DataSet */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = DataSet;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -436,9 +47,9 @@
 		E3286BC92D06EE4800E95768 = {
 			isa = PBXGroup;
 			children = (
-				E39BB7882D084DB700426BE2 /* DataSet */,
-				E39B360D2D07347D00FBCE53 /* Dependencies */,
 				E3286BD42D06EE4800E95768 /* DcmVision */,
+				E3CF7B942D6381D60003E156 /* DicomFiles */,
+				E3CF6BF62D637FD60003E156 /* Dependencies */,
 				E39BB8452D08521600426BE2 /* README.md */,
 				E3286BD32D06EE4800E95768 /* Products */,
 			);
@@ -450,6 +61,21 @@
 				E3286BD22D06EE4800E95768 /* DcmVision.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		E3CF6BF62D637FD60003E156 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				E3CF6BF52D637FD60003E156 /* setup-dependencies.sh */,
+			);
+			path = Dependencies;
+			sourceTree = "<group>";
+		};
+		E3CF7B942D6381D60003E156 /* DicomFiles */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DicomFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -469,7 +95,6 @@
 			);
 			fileSystemSynchronizedGroups = (
 				E3286BD42D06EE4800E95768 /* DcmVision */,
-				E39BB7882D084DB700426BE2 /* DataSet */,
 			);
 			name = DcmVision;
 			packageProductDependencies = (
@@ -486,7 +111,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1610;
-				LastUpgradeCheck = 1610;
+				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					E3286BD12D06EE4800E95768 = {
 						CreatedOnToolsVersion = 16.1;
@@ -518,7 +143,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E39BB8462D08521600426BE2 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -548,7 +172,10 @@
 				DEVELOPMENT_TEAM = T8HX5554JX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Dependencies/dcmtk/include/**";
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/Dependencies/dcmtk/include/**",
+					"$(PROJECT_DIR)/Dependencies/vtk/include/**",
+				);
 				INFOPLIST_FILE = "$(TARGET_NAME)/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -558,6 +185,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dependencies/dcmtk/lib",
 					"$(PROJECT_DIR)/Dependencies/zlib/lib",
+					"$(PROJECT_DIR)/Dependencies/vtk/lib",
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = giusepperocco.DicomTest;
@@ -585,7 +213,10 @@
 				DEVELOPMENT_TEAM = T8HX5554JX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Dependencies/dcmtk/include/**";
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/Dependencies/dcmtk/include/**",
+					"$(PROJECT_DIR)/Dependencies/vtk/include/**",
+				);
 				INFOPLIST_FILE = "$(TARGET_NAME)/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -595,6 +226,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dependencies/dcmtk/lib",
 					"$(PROJECT_DIR)/Dependencies/zlib/lib",
+					"$(PROJECT_DIR)/Dependencies/vtk/lib",
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = giusepperocco.DicomTest;
