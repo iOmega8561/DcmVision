@@ -1,12 +1,12 @@
 //
-//  DicomDecoder.mm
+//  DCMTKWrapper.mm
 //  DcmVision
 //
 //  Created by Giuseppe Rocco on 09/12/24.
 //
 
 #import <Foundation/Foundation.h>
-#import "DicomDecoder.h"
+#import "DCMTKWrapper.h"
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Weverything"
@@ -16,7 +16,7 @@
 
 #pragma clang diagnostic pop
 
-@implementation DicomDecoder
+@implementation DCMTKWrapper
 
 - (NSString *)toPngFrom:(NSString *)filePath named:(NSString *)fileName {
     
@@ -60,6 +60,5 @@
     
     return [self init];
 }
-
 @end
 

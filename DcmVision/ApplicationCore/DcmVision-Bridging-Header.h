@@ -6,4 +6,5 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DicomDecoder.h"
+#import "DCMTKWrapper.h"
+#import "ITKWrapper.h"

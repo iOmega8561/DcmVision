@@ -1,11 +1,11 @@
 //
-//  DicomDecoder.h
+//  DCMTKWrapper.h
 //  DcmVision
 //
 //  Created by Giuseppe Rocco on 09/12/24.
 //
 
-@interface DicomDecoder : NSObject
+@interface DCMTKWrapper : NSObject
 
 @property (nonatomic, strong) NSString *cachePath;
 

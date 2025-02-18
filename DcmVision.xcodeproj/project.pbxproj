@@ -31,6 +31,26 @@
 			path = DcmVision;
 			sourceTree = "<group>";
 		};
+		E3CF46B02D6495B70003E156 /* itk */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = itk;
+			sourceTree = "<group>";
+		};
+		E3CF47D82D649C710003E156 /* TestDataset */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = TestDataset;
+			sourceTree = "<group>";
+		};
+		E3CF8F6A2D639CFE0003E156 /* dcmtk */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = dcmtk;
+			sourceTree = "<group>";
+		};
+		E3CF90E42D639D090003E156 /* zlib */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = zlib;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +86,9 @@
 		E3CF6BF62D637FD60003E156 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				E3CF46B02D6495B70003E156 /* itk */,
+				E3CF90E42D639D090003E156 /* zlib */,
+				E3CF8F6A2D639CFE0003E156 /* dcmtk */,
 				E3CF6BF52D637FD60003E156 /* setup-dependencies.sh */,
 			);
 			path = Dependencies;
@@ -74,6 +97,7 @@
 		E3CF7B942D6381D60003E156 /* DicomFiles */ = {
 			isa = PBXGroup;
 			children = (
+				E3CF47D82D649C710003E156 /* TestDataset */,
 			);
 			path = DicomFiles;
 			sourceTree = "<group>";
@@ -95,6 +119,10 @@
 			);
 			fileSystemSynchronizedGroups = (
 				E3286BD42D06EE4800E95768 /* DcmVision */,
+				E3CF46B02D6495B70003E156 /* itk */,
+				E3CF47D82D649C710003E156 /* TestDataset */,
+				E3CF8F6A2D639CFE0003E156 /* dcmtk */,
+				E3CF90E42D639D090003E156 /* zlib */,
 			);
 			name = DcmVision;
 			packageProductDependencies = (
@@ -174,7 +202,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Dependencies/dcmtk/include/**",
-					"$(PROJECT_DIR)/Dependencies/vtk/include/**",
+					"$(PROJECT_DIR)/Dependencies/itk/include/itkeigen/Eigen/Core",
+					"$(PROJECT_DIR)/Dependencies/itk/include/ITK-6.0",
 				);
 				INFOPLIST_FILE = "$(TARGET_NAME)/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -185,7 +214,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dependencies/dcmtk/lib",
 					"$(PROJECT_DIR)/Dependencies/zlib/lib",
-					"$(PROJECT_DIR)/Dependencies/vtk/lib",
+					"$(PROJECT_DIR)/Dependencies/itk/lib",
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = giusepperocco.DicomTest;
@@ -197,6 +226,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 7;
+				XROS_DEPLOYMENT_TARGET = 2.2;
 			};
 			name = Debug;
 		};
@@ -215,7 +245,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Dependencies/dcmtk/include/**",
-					"$(PROJECT_DIR)/Dependencies/vtk/include/**",
+					"$(PROJECT_DIR)/Dependencies/itk/include/itkeigen/Eigen/Core",
+					"$(PROJECT_DIR)/Dependencies/itk/include/ITK-6.0",
 				);
 				INFOPLIST_FILE = "$(TARGET_NAME)/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -226,7 +257,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dependencies/dcmtk/lib",
 					"$(PROJECT_DIR)/Dependencies/zlib/lib",
-					"$(PROJECT_DIR)/Dependencies/vtk/lib",
+					"$(PROJECT_DIR)/Dependencies/itk/lib",
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = giusepperocco.DicomTest;
@@ -237,6 +268,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "DcmVision/ApplicationCore/DcmVision-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 7;
+				XROS_DEPLOYMENT_TARGET = 2.2;
 			};
 			name = Release;
 		};
