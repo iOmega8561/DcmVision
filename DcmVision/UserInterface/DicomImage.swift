@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DicomImage: View {
     
-    private static let dcmService: DicomService = .init()
+    private static let dcmtk: DicomToolkit = .init()
     
     let fileName: String
     
@@ -35,7 +35,7 @@ struct DicomImage: View {
         }
         .onAppear {
             self.dicomImage = try? Image(
-                uiImage: Self.dcmService.uiImageFromFile(
+                uiImage: Self.dcmtk.uiImageFromFile(
                     withName: fileName
                 )
             )

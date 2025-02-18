@@ -1,5 +1,5 @@
 //
-//  DicomService.swift
+//  DicomToolkit.swift
 //  DcmVision
 //
 //  Created by Giuseppe Rocco on 11/12/24.
@@ -7,18 +7,21 @@
 
 import SwiftUI
 
-struct DicomService {
+struct DicomToolkit {
     
     private let cacheDirectory: URL
     
-    private let dicomDecoder: DicomDecoder
+    private let dicomToolkit: DCMTKWrapper
     
     private func uiImageFromFile(_ path: String? = nil, fileName: String) throws -> UIImage {
         
         let imageData: Data
         
         if let path {
-            imageData = try .init(contentsOf: URL(fileURLWithPath: path))
+            
+            imageData = try .init(
+                contentsOf: URL(fileURLWithPath: path)
+            )
             
         } else {
             
@@ -31,7 +34,7 @@ struct DicomService {
         }
         
         guard let uiImage = UIImage(data: imageData) else {
-            throw DicomError.invalidImage
+            throw DcmVisionError.invalidImage
         }
         
         return uiImage
@@ -48,13 +51,13 @@ struct DicomService {
                 forResource: fileName,
                 withExtension: "dcm"
                 
-            ) else { throw DicomError.fileNotFound }
+            ) else { throw DcmVisionError.fileNotFound }
             
-            guard let imagePath = dicomDecoder.toPng(
+            guard let imagePath = dicomToolkit.toPng(
                 from: url.path(percentEncoded: false),
                 named: fileName
                 
-            ) else { throw DicomError.invalidFile }
+            ) else { throw DcmVisionError.invalidFile }
             
             return try uiImageFromFile(imagePath, fileName: fileName)
         }
@@ -66,6 +69,6 @@ struct DicomService {
             in: .userDomainMask
         ).first!
         
-        dicomDecoder = .init(cacheDirectoryURL: cacheDirectory)
+        dicomToolkit = .init(cacheDirectoryURL: cacheDirectory)
     }
 }

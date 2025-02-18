@@ -18,6 +18,10 @@ struct DcmVisionApp: App {
                     maxWidth: 1250,
                     minHeight: 100
                 )
+                .onAppear {
+                    // Just to check that InsightToolkit works
+                    try? InsightToolkit().loadDICOM(withName: "1-01")
+                }
         }
         .windowResizability(.contentSize)
      }
