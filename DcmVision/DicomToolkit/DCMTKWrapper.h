@@ -6,14 +6,14 @@
 //
 //  This Objective-C++ wrapper provides an interface for reading and converting
 //  DICOM files using the DCMTK library. It exposes methods for converting
-//  DICOM images to PNG format while handling caching and dictionary paths.
+//  DICOM images to BMP format while handling caching and dictionary paths.
 //
 
 #import <Foundation/Foundation.h>
 
 /// **DCMTKWrapper**
 /// A wrapper around the DCMTK library to facilitate DICOM image processing.
-/// Provides an interface to decode DICOM files and convert them to PNG format.
+/// Provides an interface to decode DICOM files and convert them to BMP format.
 @interface DCMTKWrapper : NSObject
 
 /// **Cache Path**
@@ -24,10 +24,10 @@
 /// The path to the DICOM dictionary file required by DCMTK.
 @property (nonatomic, strong) NSString *dicomDictPath;
 
-/// **Convert a DICOM file to PNG format**
+/// **Convert a DICOM file to BMP format**
 ///
 /// This method reads a DICOM image from the given file path, decodes it,
-/// and saves it as a PNG file in the specified cache directory.
+/// and saves it as a BMP file in the specified cache directory.
 ///
 /// - Parameters:
 ///   - filePath: The full path to the DICOM file.

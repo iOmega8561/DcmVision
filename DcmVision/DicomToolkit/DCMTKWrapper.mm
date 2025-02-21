@@ -20,7 +20,7 @@
 
 @implementation DCMTKWrapper
 
-/// **Convert a DICOM file to PNG format**
+/// **Convert a DICOM file to BMP format**
 ///
 /// This method uses `DicomImage` from DCMTK to read and decode a DICOM image.
 /// If successful, the image is saved as a BMP file in the cache directory.
