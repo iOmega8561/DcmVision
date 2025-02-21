@@ -12,16 +12,19 @@
 
 #import "ITKWrapper.h"
 
-#ifdef __cplusplus
-  #include <itkImage.h>
-  #include <itkImageFileReader.h>
-  #include <itkGDCMImageIOFactory.h>
-  #include <itkMetaImageIOFactory.h>
-  #include <itkNiftiImageIOFactory.h>
-  #include <itkPNGImageIOFactory.h>
-  #include <itkTIFFImageIOFactory.h>
-  #include <itkJPEGImageIOFactory.h>
-#endif
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Weverything"
+
+#include <itkImage.h>
+#include <itkImageFileReader.h>
+#include <itkGDCMImageIOFactory.h>
+#include <itkMetaImageIOFactory.h>
+#include <itkNiftiImageIOFactory.h>
+#include <itkPNGImageIOFactory.h>
+#include <itkTIFFImageIOFactory.h>
+#include <itkJPEGImageIOFactory.h>
+
+#pragma clang diagnostic pop
 
 @implementation ITKWrapper
 
@@ -55,7 +58,6 @@
     
     self = [super init];
     
-    #ifdef __cplusplus
     // ✅ Register ITK I/O Factories to Enable DICOM Reading
     itk::GDCMImageIOFactory::RegisterOneFactory();
     itk::MetaImageIOFactory::RegisterOneFactory();
@@ -63,7 +65,6 @@
     itk::PNGImageIOFactory::RegisterOneFactory();
     itk::TIFFImageIOFactory::RegisterOneFactory();
     itk::JPEGImageIOFactory::RegisterOneFactory();
-    #endif
     
     return self;
 }

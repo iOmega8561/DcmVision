@@ -13,6 +13,25 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		E30640DE2D68B2E000D0AF05 /* Exceptions for "itk" folder in "DcmVision" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"include/ITK-6.0/itkeigen/Eigen/src/Core/arch/AVX512/TrsmUnrolls.inc",
+				"include/ITK-6.0/itkeigen/Eigen/src/plugins/ArrayCwiseBinaryOps.inc",
+				"include/ITK-6.0/itkeigen/Eigen/src/plugins/ArrayCwiseUnaryOps.inc",
+				"include/ITK-6.0/itkeigen/Eigen/src/plugins/BlockMethods.inc",
+				"include/ITK-6.0/itkeigen/Eigen/src/plugins/CommonCwiseBinaryOps.inc",
+				"include/ITK-6.0/itkeigen/Eigen/src/plugins/CommonCwiseUnaryOps.inc",
+				"include/ITK-6.0/itkeigen/Eigen/src/plugins/IndexedViewMethods.inc",
+				"include/ITK-6.0/itkeigen/Eigen/src/plugins/InternalHeaderCheck.inc",
+				"include/ITK-6.0/itkeigen/Eigen/src/plugins/MatrixCwiseBinaryOps.inc",
+				"include/ITK-6.0/itkeigen/Eigen/src/plugins/MatrixCwiseUnaryOps.inc",
+				"include/ITK-6.0/itkeigen/Eigen/src/plugins/ReshapedMethods.inc",
+				"include/ITK-6.0/itkTestDriverAfterTest.inc",
+				"include/ITK-6.0/itkTestDriverBeforeTest.inc",
+			);
+			target = E3286BD12D06EE4800E95768 /* DcmVision */;
+		};
 		E3286BF52D06EEC200E95768 /* Exceptions for "DcmVision" folder in "DcmVision" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -33,6 +52,9 @@
 		};
 		E3CF46B02D6495B70003E156 /* itk */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E30640DE2D68B2E000D0AF05 /* Exceptions for "itk" folder in "DcmVision" target */,
+			);
 			path = itk;
 			sourceTree = "<group>";
 		};
