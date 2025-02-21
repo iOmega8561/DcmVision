@@ -92,7 +92,7 @@ struct DicomToolkit {
             }
             
             // Convert DICOM to BMP using DCMTKWrapper
-            guard let imagePath = dicomToolkit.toPng(
+            guard let imagePath = dicomToolkit.toBmp(
                 from: url.path(percentEncoded: false),
                 named: fileName
             ) else {

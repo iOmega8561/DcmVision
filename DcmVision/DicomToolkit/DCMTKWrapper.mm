@@ -29,8 +29,8 @@
 ///   - filePath: The full path to the DICOM file.
 ///   - fileName: The desired output file name (without extension).
 ///
-/// - Returns: The full path to the generated PNG file, or `nil` if conversion fails.
-- (NSString *)toPngFrom:(NSString *)filePath named:(NSString *)fileName {
+/// - Returns: The full path to the generated BMP file, or `nil` if conversion fails.
+- (NSString *)toBmpFrom:(NSString *)filePath named:(NSString *)fileName {
     // Create a new DICOM image from the file
     DicomImage *image = new DicomImage([filePath UTF8String]);
     
