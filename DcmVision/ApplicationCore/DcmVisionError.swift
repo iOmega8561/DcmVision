@@ -8,6 +8,8 @@
 import Foundation
 
 enum DcmVisionError: Error {
+    case noCacheDirectory
+    case dcmtkFailedInit
     case fileNotFound
     case invalidFile
     case invalidImage
