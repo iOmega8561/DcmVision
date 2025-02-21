@@ -28,8 +28,8 @@ struct InsightToolkit {
     
     /// **Load a DICOM File**
     ///
-    /// Attempts to load a DICOM file from the application bundle and process it
-    /// using the **ITK library**.
+    /// Attempts to load a DICOM file from the application bundle to
+    /// check if the DICOM format is valid using the **ITK library**.
     ///
     /// - Parameter fileName: The name of the DICOM file (without extension).
     ///
@@ -46,7 +46,7 @@ struct InsightToolkit {
         }
         
         // Pass the file path to ITK for processing
-        insightToolkit.loadDICOMat(
+        insightToolkit.isValidDICOM(
             url.path(percentEncoded: false)
         )
     }
@@ -55,14 +55,20 @@ struct InsightToolkit {
     ///
     /// - Sets up a cache directory for storing temporary DICOM processing files.
     /// - Initializes an `ITKWrapper` instance with the cache directory.
-    init() {
+    init() throws {
+        
         // Retrieve the system cache directory
-        cacheDirectory = FileManager.default.urls(
+        guard let cacheDirectory = FileManager.default.urls(
             for: .cachesDirectory,
             in: .userDomainMask
-        ).first!
+        ).first else {
+            throw DcmVisionError.noCacheDirectory
+        }
+        
+        self.cacheDirectory = cacheDirectory
         
         // Initialize the ITK wrapper with the cache directory
-        insightToolkit = ITKWrapper(cacheDirectoryURL: cacheDirectory)
+        self.insightToolkit = ITKWrapper(cacheDirectoryURL: cacheDirectory)
     }
 }
+
