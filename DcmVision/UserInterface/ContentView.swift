@@ -29,6 +29,7 @@ struct ContentView: View {
                     ForEach(1..<95) { integer in
                         
                         NavigationLink {
+                            
                             DicomImage(fileName: fileName(integer))
                                 .navigationTitle("\(fileName(integer)).dcm")
                             

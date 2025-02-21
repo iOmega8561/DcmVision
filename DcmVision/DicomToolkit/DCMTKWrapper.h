@@ -13,7 +13,7 @@
 
 /// **DCMTKWrapper**
 /// A wrapper around the DCMTK library to facilitate DICOM image processing.
-/// Provides an interface to decode DICOM files and convert them to BMP format.
+/// Provides an interface to decode DICOM files, extract metadata, and convert them to various formats.
 @interface DCMTKWrapper : NSObject
 
 /// **Cache Path**
@@ -25,7 +25,6 @@
 @property (nonatomic, strong) NSString *dicomDictPath;
 
 /// **Convert a DICOM file to BMP format**
-///
 /// This method reads a DICOM image from the given file path, decodes it,
 /// and saves it as a BMP file in the specified cache directory.
 ///
@@ -36,12 +35,31 @@
 /// - Returns: The full path to the generated BMP file, or `nil` if conversion fails.
 - (NSString *)toBmpFrom:(NSString *)filePath named:(NSString *)fileName;
 
+/// **Extract Pixel Data from a DICOM file**
+/// Returns the raw pixel data from the DICOM image which can be passed to ITK for further processing.
+///
+/// - Parameter filePath: The full path to the DICOM file.
+/// - Returns: An NSData object containing the pixel data, or `nil` if extraction fails.
+- (NSData *)pixelDataFrom:(NSString *)filePath;
+
+/// **Extract Metadata from a DICOM file**
+/// Reads common DICOM tags such as Patient Name, Patient ID, Study Date, Modality, and Instance Number.
+///
+/// - Parameter filePath: The full path to the DICOM file.
+/// - Returns: A dictionary containing the extracted metadata.
+- (NSDictionary *)metadataFrom:(NSString *)filePath;
+
+/// **Check if a file is a valid DICOM file**
+/// Attempts to load the file as a DICOM image and checks its status.
+///
+/// - Parameter filePath: The full path to the file.
+/// - Returns: YES if the file is a valid DICOM file, NO otherwise.
+- (BOOL)isValidDICOM:(NSString *)filePath;
+
 /// **Initialize with a Custom Cache Directory**
+/// Initializes the wrapper with a specific cache directory for storing output files.
 ///
-/// Initializes the wrapper with a specific cache directory where output files will be stored.
-///
-/// - Parameters:
-///   - directoryURL: The URL of the directory to use as a cache.
+/// - Parameter directoryURL: The URL of the directory to use as a cache.
 /// - Returns: An instance of `DCMTKWrapper`.
 - (instancetype)initWithCacheDirectoryURL:(NSURL *)directoryURL;
 
