@@ -7,10 +7,7 @@ This project requires some setup steps, which are outlined below.
 > [!CAUTION]
 > This project is not intended for use in any medical production environment. It should only be used for R&D purposes.
 
-
-<div align="center">
-  <img src="./Demo.png">
-</div>
+![Demo Image](./Demo.png)
 
 ## Requirements
 
