@@ -13,4 +13,6 @@ enum DcmVisionError: Error {
     case fileNotFound
     case invalidFile
     case invalidImage
+    case failedToGenerateModel
+    case conversionToUSDFailed
 }

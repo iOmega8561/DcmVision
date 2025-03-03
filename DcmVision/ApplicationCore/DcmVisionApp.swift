@@ -10,15 +10,23 @@ import SwiftUI
 @main
 struct DcmVisionApp: App {
         
+    @Environment(\.openWindow) private var openWindow
+    
     var body: some Scene {
-        WindowGroup {
+        
+        WindowGroup(id: "main") {
+            
             ContentView()
                 .frame(
                     minWidth: 500,
                     maxWidth: 1250,
                     minHeight: 100
                 )
+                .onAppear { openWindow(id: "volume") }
         }
         .windowResizability(.contentSize)
+        
+        WindowGroup(id: "volume") { ModelView() }
+            .windowStyle(.volumetric)
      }
 }

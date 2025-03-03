@@ -6,5 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import "DCMTKWrapper.h"
-#import "ITKWrapper.h"
+
+#import "VTKWrapper.h"
