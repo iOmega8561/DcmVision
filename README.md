@@ -30,7 +30,7 @@ Since pre-compiled binaries for visionOS are not available, these libraries must
 > [!TIP]
 > This project includes a facility script: **setup-dependencies.sh**
 >
-> At the top of **setup-dependencies.sh**, there is a variable named `XRSDK`, which is set to `simulator` by default. Developers can change it to `os` to switch from the simulator target to the visionOS target.
+> At the top of **setup-dependencies.sh**, there is a variable named `TARGET`, which is set to `xrsimulator` by default. Developers can change it to `xros` to switch from the simulator target to the visionOS target.
 
 #### Steps to install dependencies:
 
