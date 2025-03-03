@@ -36,9 +36,10 @@ struct DicomToolkit {
     /// - Returns: The full file URL.
     private func getFileURL(_ name: String) throws -> URL {
         
-        guard let url = Bundle.main.url(
-            forResource: name,
-            withExtension: "dcm"
+        guard let url = Bundle.main.resourceURL?
+            .appendingPathComponent("DICOM").appendingPathComponent(
+                name,
+                conformingTo: .init(filenameExtension: "dcm")!
         ) else {
             throw DcmVisionError.fileNotFound
         }
