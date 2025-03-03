@@ -1,178 +1,176 @@
-set -e
+# POSSIBLE VALUES:
+# 1) "xros"        for Apple Vision Pro
+# 2) "xrsimulator" for visionOS Simulator
+TARGET=xrsimulator
+
+############################################################
+#                                                          #
+#                  DO NOT EDIT BELOW                       #
+#        Any changes beyond this point may break           #
+#                 the functionality!                       #
+#                                                          #
+############################################################
+############################################################
+############################################################
 
 # Absolute path to this script.
 SCRIPT=$(readlink -f $0)
 # Absolute path this script is in.
 SCRIPTPATH=`dirname $SCRIPT`
 
-#Change this to "os" to build for Apple Vision Pro (real device)
-XRSDK=simulator
+# Define colors for better visibility
+YELLOW='\e[1;33m'
+GREEN='\e[1;32m'
+CYAN='\e[1;36m'
+WHITE='\e[1;37m'
+RED='\e[1;31m'
+BOLD='\e[1m'
+RESET='\e[0m'
 
+set -e
+
+# Setting up the environment
+export SCRIPTPATH
+export SDKROOT=$(xcrun --sdk $TARGET --show-sdk-path)
+export PARALLEL=$(sysctl -n hw.logicalcpu)
+
+# Entering the build location
 cd $SCRIPTPATH
 
-# LIBPNG
-if [ ! -d "libpng" ]; then
+############################################################
+############################################################
+############################################################
+#                                                          #
+#                  DO NOT EDIT BELOW                       #
+#        Build tools and Homebrew dependencies             #
+#                                                          #
+############################################################
 
-    if [ ! -d "libpng-src" ]; then
-        git clone https://github.com/glennrp/libpng.git libpng-src
+# Function to check if a command exists
+check_command() {
+    if ! command -v "$1" &> /dev/null; then
+        echo "❌ $1 is not installed."
+        return 1
+    else
+        echo "✅ $1 is installed."
+        return 0
     fi
+}
 
-    cd libpng-src
-    
-    mkdir build && cd build && cmake .. \
-        -DCMAKE_SYSTEM_NAME=Darwin \
-        -DCMAKE_OSX_ARCHITECTURES=arm64 \
-        -DCMAKE_OSX_SYSROOT=$(xcrun --sdk xr$XRSDK --show-sdk-path) \
-        -DCMAKE_INSTALL_PREFIX=$SCRIPTPATH/libpng
-    
-    make && mkdir "$SCRIPTPATH/libpng"
-    make install && make clean && cd ../..
+echo "🔍 Checking dependencies..."
+
+# Check for Homebrew
+if ! command -v brew &> /dev/null; then
+    echo "❌ Homebrew is not installed. Please install Homebrew first: https://brew.sh/"
+    exit 1
+else
+    echo "✅ Homebrew is installed."
 fi
 
-rm -fr libpng-src
+# List of dependencies
+dependencies=(cmake ninja meson wget automake autoconf autoconf-archive)
 
-# OPENSSL
-if [ ! -d "openssl" ]; then
-
-    if [ ! -d "openssl-src" ]; then
-        git clone https://github.com/openssl/openssl.git openssl-src
+# Check each dependency
+missing_packages=()
+for dep in "${dependencies[@]}"; do
+    if ! brew list --formula | grep -q "^${dep}$"; then
+        echo "❌ $dep is not installed."
+        missing_packages+=("$dep")
+    else
+        echo "✅ $dep is installed."
     fi
+done
 
-    cd openssl-src
-
-    ./Configure ios64-cross \
-        no-shared \
-        --prefix=$SCRIPTPATH/openssl \
-        -isysroot $(xcrun --sdk xr$XRSDK --show-sdk-path)
-    
-    make && mkdir "$SCRIPTPATH/openssl"
-    make install && make clean && cd ..
+# Install missing dependencies if any
+if [[ ${#missing_packages[@]} -gt 0 ]]; then
+    echo "⚠️  Installing missing dependencies: ${missing_packages[*]}"
+    brew install "${missing_packages[@]}"
+else
+    echo "🎉 All dependencies are installed!"
 fi
 
-rm -fr openssl-src
+############################################################
+#                                                          #
+#                    DO NOT EDIT BELOW                     #
+#               DcmVision dependency setup                 #
+#                                                          #
+############################################################
 
-# ZLIB
-if [ ! -d "zlib" ]; then
+echo "🔍 Starting dependency setup..."
 
-    if [ ! -d "zlib-src" ]; then
-        git clone https://github.com/madler/zlib.git zlib-src
-    fi
-    
-    cd zlib-src
-    
-    SDKROOT=$(xcrun --sdk xr$XRSDK --show-sdk-path) \
-    CC="clang -isysroot $SDKROOT -arch arm64" \
-    ./configure \
-        --static \
-        --prefix=$SCRIPTPATH/zlib
-    
-    make && mkdir "$SCRIPTPATH/zlib"
-    make install && make clean && cd ..
-fi
+# Ensure scripts are executable
+chmod +x ./.scripts/*.sh
 
-rm -fr zlib-src
+# List of dependencies (script suffixes and folder names)
+dependencies=(libpng openssl zlib dcmtk vtk-compiletools vtk)
 
-# DCMTK
-if [ ! -d "dcmtk" ]; then
+# Function to run setup scripts
+run_setup() {
 
-    if [ ! -d "dcmtk-src" ]; then
-        git clone https://github.com/DCMTK/dcmtk.git dcmtk-src
-    fi
+    local dep="$1"
+    local script="./.scripts/setup-${dep}.sh"
+    local folder="./${dep}"
     
-    cd dcmtk-src
-    
-    sed -i '' 's/ dcm2pdf//g' dcmdata/apps/CMakeLists.txt
-    
-    mkdir build && cd build && cmake .. \
-        -DBUILD_SHARED_LIBS=OFF \
-        -DCMAKE_SYSTEM_NAME=Darwin \
-        -DCMAKE_OSX_ARCHITECTURES=arm64 \
-        -DCMAKE_OSX_SYSROOT=$(xcrun --sdk xr$XRSDK --show-sdk-path) \
-        -DCMAKE_INSTALL_PREFIX=$SCRIPTPATH/dcmtk \
-        -DPNG_LIBRARY=$SCRIPTPATH/libpng/lib/libpng.a \
-        -DPNG_PNG_INCLUDE_DIR=$SCRIPTPATH/libpng/include \
-        -DOPENSSL_ROOT_DIR=$SCRIPTPATH/libssl \
-        -DOPENSSL_LIBRARIES="$SCRIPTPATH/libssl/lib/libssl.a;$SCRIPTPATH/libssl/lib/libcrypto.a" \
-        -DOPENSSL_INCLUDE_DIR=$SCRIPTPATH/libssl/include \
-        -DZLIB_LIBRARY=$SCRIPTPATH/zlib/lib/libz.a \
-        -DZLIB_INCLUDE_DIR=$SCRIPTPATH/zlib/include \
-        -DCMAKE_EXE_LINKER_FLAGS="-lz"
-    
-    make && mkdir "$SCRIPTPATH/dcmtk"
-    make install && make clean && cd ../..
-fi
+    printf "${CYAN}📦 ==> Checking ${dep} setup...${RESET}\n"
 
-rm -fr dcmtk-src
-
-# VTK
-if [ ! -d "vtk-compiletools" ]; then
+    # Check if the folder already exists (meaning it's installed)
+    if [[ -d "$folder" ]]; then
+        printf "${YELLOW}⚠️  Skipping ${dep} setup: Folder '${folder}' already exists.${RESET}\n"
+    else
     
-    if [ ! -d "vtk-src" ]; then
-        git clone https://gitlab.kitware.com/vtk/vtk vtk-src
+        # If folder doesn't exist, proceed with setup
+        if [[ -f "$script" ]]; then
+            printf "${CYAN}🔧 Preparing ${dep}...${RESET}\n"
+            source "$script" > /dev/null && \
+            printf "${GREEN}✅ ${dep} setup complete!${RESET}\n" || \
+            printf "${RED}❌ ${dep} setup failed!${RESET}\n"
+        else
+            printf "${RED}⚠️  Setup script for ${dep} not found! Skipping...${RESET}\n"
+        fi
     fi
 
-    mkdir -p vtk-src/build-ct
+    printf "${YELLOW}------------------------------------${RESET}\n\n"
+}
 
-    cmake -S $SCRIPTPATH/vtk-src \
-        -B $SCRIPTPATH/vtk-src/build-ct \
-        -DVTK_BUILD_COMPILE_TOOLS_ONLY=ON \
-        -DCMAKE_INSTALL_PREFIX=$SCRIPTPATH/vtk-compiletools
-    
-    mkdir "$SCRIPTPATH/vtk-compiletools"
-    
-    cmake --build $SCRIPTPATH/vtk-src/build-ct \
-          --config Release \
-          --target install
-fi
+# Start setup process
+printf "${YELLOW}============================${RESET}\n"
+printf "${BOLD}${GREEN}🔍 STARTING DEPENDENCY SETUP...${RESET}\n"
+printf "${YELLOW}============================${RESET}\n\n"
 
-if [ ! -d "vtk" ]; then
+# Loop through dependencies and execute setup
+for dep in "${dependencies[@]}"; do
+    run_setup "$dep"
+done
 
-    mkdir -p vtk-src/build && cd vtk-src/build
+# Post-check: Ensure all dependency folders exist
+printf "${YELLOW}============================${RESET}\n"
+printf "${BOLD}${CYAN}🔍 VERIFYING DEPENDENCIES...${RESET}\n"
+printf "${YELLOW}============================${RESET}\n\n"
+
+missing_deps=()
+
+for dep in "${dependencies[@]}"; do
+
+    if [[ -d "./${dep}" ]]; then
+        printf "${GREEN}✅ ${dep} is correctly installed.${RESET}\n"
+    else
+        printf "${RED}❌ ${dep} is missing!${RESET}\n"
+        missing_deps+=("$dep")
+    fi
+done
+
+# Final status
+if [[ ${#missing_deps[@]} -eq 0 ]]; then
+    printf "\n${BOLD}${GREEN}🎉 ALL DEPENDENCIES HAVE BEEN SUCCESSFULLY INSTALLED!${RESET}\n\n"
     
-    for i in {1..2}; do
-        cmake -GNinja .. \
-            -DCMAKE_JOB_SERVER_LAUNCH=ON \
-            -DBUILD_SHARED_LIBS=OFF \
-            -DCMAKE_SYSTEM_NAME=Darwin \
-            -DCMAKE_OSX_ARCHITECTURES=arm64 \
-            -DCMAKE_OSX_SYSROOT=$(xcrun --sdk xr$XRSDK --show-sdk-path) \
-            -DCMAKE_INSTALL_PREFIX=$SCRIPTPATH/vtk \
-            -DVTKCompileTools_DIR=$SCRIPTPATH/vtk-compiletools/lib/cmake/vtkcompiletools-9.4 \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DVTK_BUILD_TESTING=OFF \
-            -DVTK_BUILD_EXAMPLES=OFF \
-            -DVTK_GROUP_ENABLE_Rendering=NO \
-            -DVTK_GROUP_ENABLE_Views=NO \
-            -DVTK_GROUP_ENABLE_Web=NO \
-            -DVTK_GROUP_ENABLE_Imaging=YES \
-            -DVTK_GROUP_ENABLE_Parallel=NO \
-            -DVTK_GROUP_ENABLE_Utilities=NO \
-            -DVTK_MODULE_ENABLE_VTK_RenderingCore=YES \
-            -DVTK_MODULE_ENABLE_VTK_RenderingContext2D=YES \
-            -DVTK_MODULE_ENABLE_VTK_RenderingFreeType=YES \
-            -DVTK_MODULE_ENABLE_VTK_RenderingOpenGL2=NO \
-            -DVTK_MODULE_ENABLE_VTK_RenderingMetal=YES \
-            -DVTK_MODULE_ENABLE_VTK_RenderingUI=NO \
-            -DVTK_MODULE_ENABLE_VTK_CommonCore=YES \
-            -DVTK_MODULE_ENABLE_VTK_CommonDataModel=YES \
-            -DVTK_MODULE_ENABLE_VTK_IOCore=YES \
-            -DVTK_MODULE_ENABLE_VTK_IOExport=YES \
-            -DVTK_MODULE_ENABLE_VTK_IOExportOBJ=YES \
-            -DVTK_MODULE_ENABLE_VTK_IOExportUSD=YES \
-            -DVTK_MODULE_ENABLE_VTK_IOImage=YES \
-            -DVTK_MODULE_ENABLE_VTK_IOSQLite=NO \
-            -DVTK_MODULE_ENABLE_VTK_IOMINC=YES \
-            -DVTK_MODULE_ENABLE_VTK_IOGeometry=YES \
-            -DVTK_MODULE_ENABLE_VTK_FiltersCore=YES \
-            -DVTK_MODULE_ENABLE_VTK_FiltersGeneral=YES \
-            -DVTK_MODULE_ENABLE_VTK_FiltersModeling=YES \
-            -DVTK_MODULE_ENABLE_VTK_FiltersMarchingCubes=YES \
-            -DVTK_MODULE_ENABLE_VTK_FiltersFlyingEdges=YES \
-            -DVTK_MODULE_ENABLE_VTK_FiltersHybrid=YES \
-            -DVTK_MODULE_ENABLE_VTK_libxml2=NO \
-            -DVTK_MODULE_ENABLE_VTK_sqlite=NO
+else
+    printf "\n${BOLD}${RED}❌ WARNING: The following dependencies are missing:${RESET}\n"
+    
+    for dep in "${missing_deps[@]}"; do
+        printf "${RED}- $dep${RESET}\n"
     done
-        
-    cmake --build . --parallel $(sysctl -n hw.logicalcpu) --config Release
-    mkdir "$SCRIPTPATH/vtk" && cmake --install .
+    
+    printf "\n${BOLD}${YELLOW}⚠️  Please check the setup logs above.${RESET}\n\n"
 fi
+
+printf "${YELLOW}============================${RESET}\n\n"
