@@ -14,7 +14,6 @@ struct ModelView: View {
     let directoryURL: URL
     
     @State private var error: Error? = nil
-    
     @State private var modelEntity: Entity? = nil
     
     var body: some View {
@@ -43,7 +42,7 @@ struct ModelView: View {
             }
         }
         .overlay {
-            if let error {
+            if modelEntity == nil, let error {
                 ErrorView(error: error)
                 
             } else if modelEntity == nil { LoadingView() }

@@ -12,7 +12,6 @@ struct GridStackView: View {
     let directoryURL: URL
     
     @State private var dicomURLs: [URL]? = nil
-    
     @State private var error: String? = nil
     
     @Environment(\.openWindow) private var openWindow
@@ -57,6 +56,8 @@ struct GridStackView: View {
         
         let dcmtk = try DicomToolkit()
         
-        return fileURLs.filter { dcmtk.isValidDICOM(at: $0) }
+        let filteredURLs = fileURLs.filter { dcmtk.isValidDICOM(at: $0) }
+        
+        return filteredURLs.sorted { $0.lastPathComponent < $1.lastPathComponent }        
     }
 }
