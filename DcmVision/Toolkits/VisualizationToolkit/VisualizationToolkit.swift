@@ -48,13 +48,42 @@ struct VisualizationToolkit {
         return destinationURL
     }
     
+    /// Retrieves a USD file from the cache and verifies its validity.
+    ///
+    /// This method attempts to read a USD file from the cache directory, checking whether
+    /// it is a valid binary USD (`.usdc` or `.usd`) file by inspecting its header. If the file does
+    /// not exist or fails validation, an error is thrown.
+    ///
+    /// - Parameter fileName: The name of the USD file to retrieve.
+    /// - Throws:
+    ///   - `DcmVisionError.invalidFile` if the file exists but is not a valid binary USD file.
+    ///   - Any errors encountered while accessing the file system (e.g., file not found).
+    /// - Returns: A `URL` pointing to the validated USD file within the cache directory.
+    private func getNamedUSDFromCache(_ fileName: String) throws -> URL {
+                
+        let fileHandle = try FileHandle(
+            forReadingFrom: cacheDirectory.appendingPathComponent(fileName, conformingTo: .usd)
+        )
+        
+        let headerData = fileHandle.readData(ofLength: "PXR-USDC".count)
+        fileHandle.closeFile()
+        
+        guard let headerString = String(data: headerData, encoding: .utf8),
+              headerString.contains("PXR-USDC") else {
+            throw DcmVisionError.invalidFile
+        }
+        
+        return cacheDirectory.appendingPathComponent(fileName, conformingTo: .usd)
+    }
+    
     // MARK: - Public Methods
     
     /// Generates a 3D model from a DICOM dataset and converts it to USD.
     ///
-    /// This method uses the VTKWrapper to read a directory of DICOM files, apply a Marching Cubes
-    /// isosurface extraction using the specified threshold, and export the resulting model as an OBJ file.
-    /// The OBJ file is then loaded into a ModelIO asset and exported as a USD file.
+    /// This method first calls the private `getNamedUSDFromCache(:_)` to check if the requested model
+    /// has already been cached. If not, it uses the VTKWrapper to read a directory of DICOM files,
+    /// apply a Marching Cubes isosurface extraction using the specified threshold, and export the resulting
+    /// model as an OBJ file. The OBJ file is then loaded into a ModelIO asset and exported as a USD file.
     ///
     /// - Parameters:
     ///   - directoryURL: The file URL to the directory containing the DICOM files.
@@ -69,28 +98,15 @@ struct VisualizationToolkit {
         threshold: Double
     ) throws -> URL {
         
-        guard let vtkOutput = vtkWrapper.generate3DModel(fromDICOMDirectory: directoryURL.path(percentEncoded: false),
+        if let cachedURL = try? getNamedUSDFromCache(fileName) {
+            return cachedURL
+        }
+        
+        guard let vtkOutput = vtkWrapper.generate3DModel(
+            fromDICOMDirectory: directoryURL.path(percentEncoded: false),
             fileName: fileName,
             threshold: threshold
         ) else {
-            throw DcmVisionError.failedToGenerateModel
-        }
-        
-        return try convertToUSD(vtkOutput)
-    }
-    
-    /// Generates a simple 3D sphere model and converts it to USD.
-    ///
-    /// This method uses the VTKWrapper to generate a sphere as an OBJ file and then converts
-    /// it to a USD file using ModelIO.
-    ///
-    /// - Parameter fileName: The base file name (without extension) for the output model.
-    /// - Returns: The file URL of the generated USD model.
-    /// - Throws: `DcmVisionError.noCacheDirectory` if no cache directory is available;
-    ///           `DcmVisionError.conversionToUSDFailed` if the conversion to USD fails.
-    func generateSphere(withName fileName: String) throws -> URL {
-        
-        guard let vtkOutput = vtkWrapper.generateSphereAndExport(fileName) else {
             throw DcmVisionError.failedToGenerateModel
         }
         

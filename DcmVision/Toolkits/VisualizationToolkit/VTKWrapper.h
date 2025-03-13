@@ -17,9 +17,9 @@
 ///        testing and generating basic geometric objects, as well as extracting
 ///        surfaces from DICOM volumes.
 ///
-/// This class provides methods to check if VTK is correctly linked, generate a simple
-/// 3D mesh (such as a sphere), reconstruct a 3D model from DICOM slices using
-/// Marching Cubes, and export these meshes to standard VTK-supported formats (e.g., OBJ).
+/// This class provides methods to check if VTK is correctly linked,
+/// reconstruct a 3D model from DICOM slices using Marching Cubes,
+/// and export these meshes to standard VTK-supported formats (e.g., OBJ).
 @interface VTKWrapper : NSObject
 
 /// @property cachePath
@@ -37,15 +37,6 @@
 ///
 /// @return A boolean indicating whether VTK is functional.
 - (BOOL)isVTKFunctional;
-
-/// @brief Generates a simple 3D sphere and saves it as an OBJ file.
-///
-/// The sphere is saved in OBJ format inside the @c cachePath directory. If the export
-/// fails, this method returns nil.
-///
-/// @param fileName The base file name (without extension) for the OBJ file.
-/// @return The full filesystem path to the generated OBJ model, or nil on failure.
-- (NSString *)generateSphereAndExport:(NSString *)fileName;
 
 /// @brief Reads a directory of DICOM files, reconstructs a 3D surface using Marching Cubes,
 ///        and exports the resulting model as an OBJ file.

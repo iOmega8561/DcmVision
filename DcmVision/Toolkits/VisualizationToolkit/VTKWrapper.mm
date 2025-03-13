@@ -45,30 +45,6 @@
     } @catch (NSException *exception) { return NO; }
 }
 
-/// @brief Generates a simple 3D sphere and exports it as an OBJ file.
-/// @param fileName The base file name (without extension) for the OBJ output.
-/// @return The full filesystem path to the generated OBJ model, or nil on failure.
-- (NSString *)generateSphereAndExport:(NSString *)fileName {
-    
-    @try {
-        // Create a sphere with higher resolution.
-        vtkSmartPointer<vtkSphereSource> sphereSource = vtkSmartPointer<vtkSphereSource>::New();
-        sphereSource->SetThetaResolution(20);
-        sphereSource->SetPhiResolution(20);
-        sphereSource->Update();
-        
-        // Retrieve the generated polydata.
-        vtkSmartPointer<vtkPolyData> sphereData = sphereSource->GetOutput();
-        
-        // Export the polydata using the common export method.
-        return [self exportPolyData:sphereData withFileName:fileName];
-        
-    } @catch (NSException *exception) {
-        NSLog(@"Error generating sphere OBJ: %@", exception);
-        return nil;
-    }
-}
-
 /// @brief Reads a directory of DICOM files, reconstructs a 3D isosurface using Marching Cubes,
 ///        and exports the resulting mesh as an OBJ file.
 /// @param dicomDir Filesystem path to a directory containing DICOM files.
