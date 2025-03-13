@@ -6,18 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXCopyFilesBuildPhase section */
-		E3DC330E2D75FBB7005173CF /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = DICOM;
-			dstSubfolderSpec = 7;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		E3286BD22D06EE4800E95768 /* DcmVision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DcmVision.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E39BB8452D08521600426BE2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -256,6 +244,8 @@
 				"share/dcmtk-3.6.9-DEV/wlistdb/OFFIS/wklist8.dump",
 				"share/dcmtk-3.6.9-DEV/wlistdb/OFFIS/wklist9.dump",
 				"share/dcmtk-3.6.9-DEV/wlistdb/OFFIS/wklist10.dump",
+				"share/dcmtk-3.6.9-DEV/wlistdb/README",
+				"share/dcmtk-3.6.9-DEV/wlistqry/README",
 				"share/dcmtk-3.6.9-DEV/wlistqry/wlistqry0.dump",
 				"share/dcmtk-3.6.9-DEV/wlistqry/wlistqry1.dump",
 				"share/dcmtk-3.6.9-DEV/wlistqry/wlistqry2.dump",
@@ -299,6 +289,7 @@
 				"share/doc/dcmtk-3.6.9-DEV/CHANGES.369",
 				"share/doc/dcmtk-3.6.9-DEV/ciphers.txt",
 				"share/doc/dcmtk-3.6.9-DEV/config.txt",
+				"share/doc/dcmtk-3.6.9-DEV/COPYRIGHT",
 				"share/doc/dcmtk-3.6.9-DEV/CREDITS",
 				"share/doc/dcmtk-3.6.9-DEV/datadict.txt",
 				"share/doc/dcmtk-3.6.9-DEV/dcmqrcnf.txt",
@@ -505,210 +496,7 @@
 			);
 			target = E3286BD12D06EE4800E95768 /* DcmVision */;
 		};
-		E3DC330C2D75FB9D005173CF /* Exceptions for "TestDataset" folder in "DcmVision" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"1-01.dcm",
-				"1-02.dcm",
-				"1-03.dcm",
-				"1-04.dcm",
-				"1-05.dcm",
-				"1-06.dcm",
-				"1-07.dcm",
-				"1-08.dcm",
-				"1-09.dcm",
-				"1-10.dcm",
-				"1-11.dcm",
-				"1-12.dcm",
-				"1-13.dcm",
-				"1-14.dcm",
-				"1-15.dcm",
-				"1-16.dcm",
-				"1-17.dcm",
-				"1-18.dcm",
-				"1-19.dcm",
-				"1-20.dcm",
-				"1-21.dcm",
-				"1-22.dcm",
-				"1-23.dcm",
-				"1-24.dcm",
-				"1-25.dcm",
-				"1-26.dcm",
-				"1-27.dcm",
-				"1-28.dcm",
-				"1-29.dcm",
-				"1-30.dcm",
-				"1-31.dcm",
-				"1-32.dcm",
-				"1-33.dcm",
-				"1-34.dcm",
-				"1-35.dcm",
-				"1-36.dcm",
-				"1-37.dcm",
-				"1-38.dcm",
-				"1-39.dcm",
-				"1-40.dcm",
-				"1-41.dcm",
-				"1-42.dcm",
-				"1-43.dcm",
-				"1-44.dcm",
-				"1-45.dcm",
-				"1-46.dcm",
-				"1-47.dcm",
-				"1-48.dcm",
-				"1-49.dcm",
-				"1-50.dcm",
-				"1-51.dcm",
-				"1-52.dcm",
-				"1-53.dcm",
-				"1-54.dcm",
-				"1-55.dcm",
-				"1-56.dcm",
-				"1-57.dcm",
-				"1-58.dcm",
-				"1-59.dcm",
-				"1-60.dcm",
-				"1-61.dcm",
-				"1-62.dcm",
-				"1-63.dcm",
-				"1-64.dcm",
-				"1-65.dcm",
-				"1-66.dcm",
-				"1-67.dcm",
-				"1-68.dcm",
-				"1-69.dcm",
-				"1-70.dcm",
-				"1-71.dcm",
-				"1-72.dcm",
-				"1-73.dcm",
-				"1-74.dcm",
-				"1-75.dcm",
-				"1-76.dcm",
-				"1-77.dcm",
-				"1-78.dcm",
-				"1-79.dcm",
-				"1-80.dcm",
-				"1-81.dcm",
-				"1-82.dcm",
-				"1-83.dcm",
-				"1-84.dcm",
-				"1-85.dcm",
-				"1-86.dcm",
-				"1-87.dcm",
-				"1-88.dcm",
-				"1-89.dcm",
-				"1-90.dcm",
-				"1-91.dcm",
-				"1-92.dcm",
-				"1-93.dcm",
-				"1-94.dcm",
-			);
-			target = E3286BD12D06EE4800E95768 /* DcmVision */;
-		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		E3DC336D2D75FBE4005173CF /* Exceptions for "TestDataset" folder in "Copy Files" phase from "DcmVision" target */ = {
-			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
-			buildPhase = E3DC330E2D75FBB7005173CF /* CopyFiles */;
-			membershipExceptions = (
-				"1-01.dcm",
-				"1-02.dcm",
-				"1-03.dcm",
-				"1-04.dcm",
-				"1-05.dcm",
-				"1-06.dcm",
-				"1-07.dcm",
-				"1-08.dcm",
-				"1-09.dcm",
-				"1-10.dcm",
-				"1-11.dcm",
-				"1-12.dcm",
-				"1-13.dcm",
-				"1-14.dcm",
-				"1-15.dcm",
-				"1-16.dcm",
-				"1-17.dcm",
-				"1-18.dcm",
-				"1-19.dcm",
-				"1-20.dcm",
-				"1-21.dcm",
-				"1-22.dcm",
-				"1-23.dcm",
-				"1-24.dcm",
-				"1-25.dcm",
-				"1-26.dcm",
-				"1-27.dcm",
-				"1-28.dcm",
-				"1-29.dcm",
-				"1-30.dcm",
-				"1-31.dcm",
-				"1-32.dcm",
-				"1-33.dcm",
-				"1-34.dcm",
-				"1-35.dcm",
-				"1-36.dcm",
-				"1-37.dcm",
-				"1-38.dcm",
-				"1-39.dcm",
-				"1-40.dcm",
-				"1-41.dcm",
-				"1-42.dcm",
-				"1-43.dcm",
-				"1-44.dcm",
-				"1-45.dcm",
-				"1-46.dcm",
-				"1-47.dcm",
-				"1-48.dcm",
-				"1-49.dcm",
-				"1-50.dcm",
-				"1-51.dcm",
-				"1-52.dcm",
-				"1-53.dcm",
-				"1-54.dcm",
-				"1-55.dcm",
-				"1-56.dcm",
-				"1-57.dcm",
-				"1-58.dcm",
-				"1-59.dcm",
-				"1-60.dcm",
-				"1-61.dcm",
-				"1-62.dcm",
-				"1-63.dcm",
-				"1-64.dcm",
-				"1-65.dcm",
-				"1-66.dcm",
-				"1-67.dcm",
-				"1-68.dcm",
-				"1-69.dcm",
-				"1-70.dcm",
-				"1-71.dcm",
-				"1-72.dcm",
-				"1-73.dcm",
-				"1-74.dcm",
-				"1-75.dcm",
-				"1-76.dcm",
-				"1-77.dcm",
-				"1-78.dcm",
-				"1-79.dcm",
-				"1-80.dcm",
-				"1-81.dcm",
-				"1-82.dcm",
-				"1-83.dcm",
-				"1-84.dcm",
-				"1-85.dcm",
-				"1-86.dcm",
-				"1-87.dcm",
-				"1-88.dcm",
-				"1-89.dcm",
-				"1-90.dcm",
-				"1-91.dcm",
-				"1-92.dcm",
-				"1-93.dcm",
-				"1-94.dcm",
-			);
-		};
-/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		E3286BD42D06EE4800E95768 /* DcmVision */ = {
@@ -717,15 +505,6 @@
 				E3286BF52D06EEC200E95768 /* Exceptions for "DcmVision" folder in "DcmVision" target */,
 			);
 			path = DcmVision;
-			sourceTree = "<group>";
-		};
-		E3CF47D82D649C710003E156 /* TestDataset */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				E3DC330C2D75FB9D005173CF /* Exceptions for "TestDataset" folder in "DcmVision" target */,
-				E3DC336D2D75FBE4005173CF /* Exceptions for "TestDataset" folder in "Copy Files" phase from "DcmVision" target */,
-			);
-			path = TestDataset;
 			sourceTree = "<group>";
 		};
 		E3CF8F6A2D639CFE0003E156 /* dcmtk */ = {
@@ -769,7 +548,6 @@
 			isa = PBXGroup;
 			children = (
 				E3286BD42D06EE4800E95768 /* DcmVision */,
-				E3CF7B942D6381D60003E156 /* DicomFiles */,
 				E3CF6BF62D637FD60003E156 /* Dependencies */,
 				E39BB8452D08521600426BE2 /* README.md */,
 				E3DC13282D75A860005173CF /* Frameworks */,
@@ -796,14 +574,6 @@
 			path = Dependencies;
 			sourceTree = "<group>";
 		};
-		E3CF7B942D6381D60003E156 /* DicomFiles */ = {
-			isa = PBXGroup;
-			children = (
-				E3CF47D82D649C710003E156 /* TestDataset */,
-			);
-			path = DicomFiles;
-			sourceTree = "<group>";
-		};
 		E3DC13282D75A860005173CF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -821,7 +591,6 @@
 				E3286BCE2D06EE4800E95768 /* Sources */,
 				E3286BCF2D06EE4800E95768 /* Frameworks */,
 				E3286BD02D06EE4800E95768 /* Resources */,
-				E3DC330E2D75FBB7005173CF /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -829,7 +598,6 @@
 			);
 			fileSystemSynchronizedGroups = (
 				E3286BD42D06EE4800E95768 /* DcmVision */,
-				E3CF47D82D649C710003E156 /* TestDataset */,
 				E3CF8F6A2D639CFE0003E156 /* dcmtk */,
 				E3CF90E42D639D090003E156 /* zlib */,
 			);

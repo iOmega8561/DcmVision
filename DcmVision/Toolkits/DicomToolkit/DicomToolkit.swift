@@ -27,26 +27,6 @@ struct DicomToolkit {
     /// to convert DICOM files into standard image formats.
     private let dicomToolkit: DCMTKWrapper
     
-    // MARK: - Helper Methods
-    
-    /// **Get a File URL from the Main Bundle**
-    ///
-    /// - Parameter name: The file name (without extension).
-    /// - Throws: `DcmVisionError.fileNotFound` if the file does not exist.
-    /// - Returns: The full file URL.
-    private func getFileURL(_ name: String) throws -> URL {
-        
-        guard let url = Bundle.main.resourceURL?
-            .appendingPathComponent("DICOM").appendingPathComponent(
-                name,
-                conformingTo: .init(filenameExtension: "dcm")!
-        ) else {
-            throw DcmVisionError.fileNotFound
-        }
-        
-        return url
-    }
-    
     // MARK: - Conversion Methods
     
     /// **Convert a File Path to a `UIImage`**
@@ -54,26 +34,40 @@ struct DicomToolkit {
     /// Attempts to read a file (BMP) from a given path and convert it into a `UIImage`.
     ///
     /// - Parameters:
-    ///   - path: The full path to the image file (optional).
+    ///   - filePath: The full path to the image file.
     ///   - fileName: The file name (used if `path` is not provided).
     ///
     /// - Returns: A `UIImage` instance if successful.
     ///
     /// - Throws: `DcmVisionError.invalidImage` if the image cannot be loaded.
-    private func imageFromFile(_ path: String? = nil, fileName: String) throws -> UIImage {
+    private func imageFromFile(at filePath: String) throws -> UIImage {
         
-        let imageData: Data
+        let imageData = try Data(contentsOf: URL(fileURLWithPath: filePath))
         
-        if let path {
-            imageData = try Data(contentsOf: URL(fileURLWithPath: path))
-            
-        } else {
-        
-            imageData = try Data(contentsOf: cacheDirectory.appendingPathComponent(
-                fileName,
-                conformingTo: .bmp
-            ))
+        // Convert raw data to UIImage
+        guard let uiImage = UIImage(data: imageData) else {
+            throw DcmVisionError.invalidImage
         }
+        
+        return uiImage
+    }
+    
+    /// **Convert a File Path to a `UIImage`**
+    ///
+    /// Attempts to read a file (BMP) from a given path and convert it into a `UIImage`.
+    ///
+    /// - Parameters:
+    ///   - fileName: The file name for checking the cache directory.
+    ///
+    /// - Returns: A `UIImage` instance if successful.
+    ///
+    /// - Throws: `DcmVisionError.invalidImage` if the image cannot be loaded.
+    private func imageFromFile(named fileName: String) throws -> UIImage {
+        
+        let imageData = try Data(contentsOf: cacheDirectory.appendingPathComponent(
+            fileName,
+            conformingTo: .bmp
+        ))
         
         // Convert raw data to UIImage
         guard let uiImage = UIImage(data: imageData) else {
@@ -89,27 +83,27 @@ struct DicomToolkit {
     /// - If not found, converts the DICOM file to a BMP format using `DCMTKWrapper`
     ///   and then loads it into `UIImage`.
     ///
-    /// - Parameter fileName: The name of the DICOM file (without extension).
+    /// - Parameter fileURL: The location of the DICOM file.
     ///
     /// - Returns: A `UIImage` representation of the DICOM file.
     /// - Throws:
     ///   - `DcmVisionError.fileNotFound` if the DICOM file cannot be found.
     ///   - `DcmVisionError.invalidFile` if the file cannot be converted.
     ///   - `DcmVisionError.invalidImage` if the image cannot be loaded.
-    func imageFromFile(named fileName: String) throws -> UIImage {
+    func imageFromFile(at fileURL: URL) throws -> UIImage {
         
-        if let uiImage = try? imageFromFile(fileName: fileName) {
+        if let uiImage = try? imageFromFile(named: fileURL.lastPathComponent) {
             return uiImage
         }
         
         guard let imagePath = dicomToolkit.toBmp(
-            from: try getFileURL(fileName).path(percentEncoded: false),
-            named: fileName
+            from: fileURL.path(percentEncoded: false),
+            named: fileURL.lastPathComponent
         ) else {
             throw DcmVisionError.invalidFile
         }
         
-        return try imageFromFile(imagePath, fileName: fileName)
+        return try imageFromFile(at: imagePath)
     }
     
     // MARK: - Validation Methods
@@ -118,12 +112,12 @@ struct DicomToolkit {
     ///
     /// Uses `DCMTKWrapper` to validate whether the given file is a valid DICOM file.
     ///
-    /// - Parameter fileName: The name of the DICOM file (without extension).
+    /// - Parameter fileURL: The location of the DICOM file.
     /// - Returns: `true` if the file is valid, `false` otherwise.
-    func isValidDICOM(named fileName: String) throws -> Bool {
+    func isValidDICOM(at fileURL: URL) -> Bool {
         
         dicomToolkit.isValidDICOM(
-            try getFileURL(fileName).path(percentEncoded: false)
+            fileURL.path(percentEncoded: false)
         )
     }
     
@@ -133,11 +127,11 @@ struct DicomToolkit {
     ///
     /// Retrieves the raw pixel data from the DICOM file.
     ///
-    /// - Parameter fileName: The name of the DICOM file (without extension).
+    /// - Parameter fileURL: The location of the DICOM file.
     /// - Returns: The pixel data as `Data`, or `nil` if extraction fails.
-    func pixelDataFromFile(named fileName: String) throws -> Data {
+    func pixelDataFromFile(at fileURL: URL) throws -> Data {
         
-        let filePath = try getFileURL(fileName).path(percentEncoded: false)
+        let filePath = fileURL.path(percentEncoded: false)
         
         guard let pixelData = dicomToolkit.pixelData(from: filePath) else {
             throw DcmVisionError.invalidFile
@@ -150,11 +144,11 @@ struct DicomToolkit {
     ///
     /// Extracts DICOM metadata such as **Patient Name, Patient ID, Study Date, Modality, etc.**
     ///
-    /// - Parameter fileName: The name of the DICOM file (without extension).
+    /// - Parameter fileURL: The location of the DICOM file.
     /// - Returns: A dictionary containing the extracted metadata.
-    func metadataFromFile(named fileName: String) throws -> [String: Any] {
+    func metadataFromFile(at fileURL: URL) throws -> [String: Any] {
         
-        let filePath = try getFileURL(fileName).path(percentEncoded: false)
+        let filePath = fileURL.path(percentEncoded: false)
         let metadata = dicomToolkit.metadata(from: filePath) as? [String: Any]
         
         guard let metadata else {
