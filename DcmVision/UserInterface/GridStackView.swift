@@ -13,6 +13,8 @@ struct GridStackView: View {
     
     @State private var dicomURLs: [URL]? = nil
     
+    @State private var error: String? = nil
+    
     @Environment(\.openWindow) private var openWindow
     
     var body: some View {
@@ -32,24 +34,29 @@ struct GridStackView: View {
                             }
                         }
                     }
-        
+                
+            } else if let error {
+                ErrorView(error: error)
+                
             } else { LoadingView() }
         }
         .task {
-            
             do {
-                let fileURLs = try FileManager.default.contentsOfDirectory(
-                    at: directoryURL,
-                    includingPropertiesForKeys: nil
-                )
+                dicomURLs = try loadFileURLs()
                 
-                let dcmtk = try DicomToolkit()
-                
-                dicomURLs = fileURLs.filter {
-                    dcmtk.isValidDICOM(at: $0)
-                }
-                
-            } catch { print("❌ Error reading directory: \(error.localizedDescription)") }
+            } catch { self.error = error.localizedDescription }
         }
+    }
+    
+    func loadFileURLs() throws -> [URL] {
+        
+        let fileURLs = try FileManager.default.contentsOfDirectory(
+            at: directoryURL,
+            includingPropertiesForKeys: nil
+        )
+        
+        let dcmtk = try DicomToolkit()
+        
+        return fileURLs.filter { dcmtk.isValidDICOM(at: $0) }
     }
 }

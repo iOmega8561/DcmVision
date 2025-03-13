@@ -11,6 +11,10 @@ struct ImageView: View {
         
     let fileURL: URL
     
+    let showErrorDescription: Bool
+    
+    @State private var error: Error? = nil
+    
     @State private var dicomImage: Image? = nil
     @State private var metadata: [String: Any] = [:]
     
@@ -34,27 +38,27 @@ struct ImageView: View {
                         .padding()
                     }
                 
-            } else {
+            } else if let error {
+                showErrorDescription ? ErrorView(error: error) : ErrorView()
                 
-                Image(systemName: "exclamationmark.triangle.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: 100, maxHeight: 100)
-                    .foregroundStyle(.yellow)
-            }
+            } else { ProgressView().scaleEffect(1.5) }
         }
-        .onAppear {
-            
+        .task {
             do {
-                let dcmtk: DicomToolkit = try .init()
-                                
-                self.dicomImage = try Image(
-                    uiImage: dcmtk.imageFromFile(at: fileURL)
-                )
+                try bootstrap()
                 
-                self.metadata = try dcmtk.metadataFromFile(at: fileURL)
-                
-            } catch { print(error.localizedDescription) }
+            } catch { self.error = error }
         }
+    }
+    
+    func bootstrap() throws {
+        
+        let dcmtk: DicomToolkit = try .init()
+                                
+        self.dicomImage = try Image(
+            uiImage: dcmtk.imageFromFile(at: fileURL)
+        )
+                
+        self.metadata = try dcmtk.metadataFromFile(at: fileURL)
     }
 }

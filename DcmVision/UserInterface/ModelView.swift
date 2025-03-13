@@ -13,13 +13,20 @@ struct ModelView: View {
             
     let directoryURL: URL
     
+    @State private var error: Error? = nil
+    
     @State private var modelEntity: Entity? = nil
     
     var body: some View {
         
         RealityView { _ in
             
-            Task { await loadModel() }
+            Task {
+                do {
+                    modelEntity = try await bootstrap()
+                    
+                } catch { self.error = error }
+            }
             
         } update: { content in
             
@@ -35,24 +42,24 @@ struct ModelView: View {
                 content.add(modelEntity)
             }
         }
-        .overlay { if modelEntity == nil { LoadingView() } }
+        .overlay {
+            if let error {
+                ErrorView(error: error)
+                
+            } else if modelEntity == nil { LoadingView() }
+        }
     }
     
-    func loadModel() async {
+    func bootstrap() async throws -> Entity {
         
-        do {
-            let visualizationToolkit: VisualizationToolkit = try .init()
-            
-            let dicom3DURL: URL = try visualizationToolkit.generateDICOM(
-                fromDirectory: directoryURL,
-                withName: directoryURL.lastPathComponent,
-                threshold: 300.0
-            )
-            
-            modelEntity = try await Entity(
-                contentsOf: dicom3DURL
-            )
-                
-        } catch { print(error.localizedDescription) }
+        let visualizationToolkit: VisualizationToolkit = try .init()
+        
+        let dicom3DURL: URL = try visualizationToolkit.generateDICOM(
+            fromDirectory: directoryURL,
+            withName: directoryURL.lastPathComponent,
+            threshold: 300.0
+        )
+        
+        return try await Entity(contentsOf: dicom3DURL)
     }
 }
