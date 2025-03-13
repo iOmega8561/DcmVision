@@ -23,17 +23,18 @@ struct GridView: View {
             
             LazyVGrid(columns: gridItemLayout, spacing: 10) {
                 
-                ForEach(dicomURLs, id: \.self) { url in
+                ForEach(dicomURLs, id: \.self.absoluteString) { url in
                     
                     NavigationLink {
                         
-                        ImageView(fileURL: url)
+                        ImageView(fileURL: url, showErrorDescription: true)
                             .navigationTitle(url.lastPathComponent)
                     } label: {
                         
-                        ImageView(fileURL: url)
+                        ImageView(fileURL: url, showErrorDescription: false)
                             .frame(minWidth: 150, minHeight: 150)
                     }
+                    .id(url)
                     .buttonStyle(.plain)
                 }
             }
