@@ -1,5 +1,5 @@
 //
-//  DcmVisionApp.mm
+//  DcmVisionApp.swift
 //  DcmVision
 //
 //  Created by Giuseppe Rocco on 09/12/24.
@@ -9,24 +9,34 @@ import SwiftUI
 
 @main
 struct DcmVisionApp: App {
-        
-    @Environment(\.openWindow) private var openWindow
-    
+            
     var body: some Scene {
         
-        WindowGroup(id: "main") {
-            
+        WindowGroup {
             ContentView()
-                .frame(
-                    minWidth: 500,
-                    maxWidth: 1250,
-                    minHeight: 100
-                )
-                .onAppear { openWindow(id: "volume") }
+                .frame(width: 300, height: 300)
         }
         .windowResizability(.contentSize)
         
-        WindowGroup(id: "volume") { ModelView() }
-            .windowStyle(.volumetric)
+        WindowGroup(id: "dicom", for: URL.self) { url in
+            
+            if let directoryURL = url.wrappedValue {
+                GridStackView(directoryURL: directoryURL)
+                    .frame(
+                        minWidth: 500,
+                        maxWidth: 1250,
+                        minHeight: 500
+                    )
+            }
+        }
+        .windowResizability(.contentSize)
+        
+        WindowGroup(id: "volume", for: URL.self) { url in
+            
+            if let directoryURL = url.wrappedValue {
+                ModelView(directoryURL: directoryURL)
+            }
+        }
+        .windowStyle(.volumetric)
      }
 }

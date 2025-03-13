@@ -2,52 +2,47 @@
 //  ContentView.swift
 //  DcmVision
 //
-//  Created by Giuseppe Rocco on 09/12/24.
+//  Created by Giuseppe Rocco on 13/03/25.
 //
 
 import SwiftUI
 
+import UniformTypeIdentifiers
+
 struct ContentView: View {
     
-    private let gridItemLayout = [
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible())
-    ]
+    @State private var fileImporterIsPresented: Bool = false
     
-    private var fileName: (Int) -> String = { integer in
-        return "1-\(String(format: "%02d", integer))"
-    }
+    @Environment(\.openWindow) private var openWindow
     
     var body: some View {
-        NavigationStack {
+        
+        VStack {
+    
+            Text("Welcome to DcmVision")
+                .font(.largeTitle)
+                .multilineTextAlignment(.center)
+                .padding(.vertical)
             
-            ScrollView {
-                
-                LazyVGrid(columns: gridItemLayout, spacing: 10) {
-                    
-                    ForEach(1..<95) { integer in
-                        
-                        NavigationLink {
-                            
-                            DicomImage(fileName: fileName(integer))
-                                .navigationTitle("\(fileName(integer)).dcm")
-                            
-                        } label: {
-                            
-                            DicomImage(fileName: fileName(integer))
-                                .frame(
-                                    minWidth: 150,
-                                    maxWidth: 300,
-                                    minHeight: 150,
-                                    maxHeight: 300
-                                )
-                        }
-                        .buttonStyle(.plain)
-                    }
-                }
+            Button("Pick a DICOM directory") {
+                fileImporterIsPresented = true
             }
-            .navigationTitle("DICOM Data Set")
+            
+        }
+        .fileImporter(
+            isPresented: $fileImporterIsPresented,
+            allowedContentTypes: [.folder],
+            allowsMultipleSelection: false
+        ) { result in
+            
+            guard let urls = try? result.get() else {
+                return
+            }
+            
+            if let directoryURL = urls.first {
+                
+                openWindow(id: "dicom", value: directoryURL)
+            }
         }
     }
 }

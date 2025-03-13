@@ -11,11 +11,17 @@ import RealityKit
 
 struct ModelView: View {
             
+    let directoryURL: URL
+    
     @State private var modelEntity: Entity? = nil
     
     var body: some View {
         
-        RealityView { content in
+        RealityView { _ in
+            
+            Task { await loadModel() }
+            
+        } update: { content in
             
             if let modelEntity {
                                 
@@ -29,22 +35,24 @@ struct ModelView: View {
                 content.add(modelEntity)
             }
         }
-        .onAppear {
+        .overlay { if modelEntity == nil { LoadingView() } }
+    }
+    
+    func loadModel() async {
+        
+        do {
+            let visualizationToolkit: VisualizationToolkit = try .init()
             
-            do {
-                let visualizationToolkit: VisualizationToolkit = try .init()
+            let dicom3DURL: URL = try visualizationToolkit.generateDICOM(
+                fromDirectory: directoryURL,
+                withName: directoryURL.lastPathComponent,
+                threshold: 300.0
+            )
+            
+            modelEntity = try await Entity(
+                contentsOf: dicom3DURL
+            )
                 
-                let dicom3DURL: URL = try visualizationToolkit.generateDICOM(
-                    fromDirectory: Bundle.main.resourceURL!.appendingPathComponent("DICOM"),
-                    withName: "Dicom3DTest",
-                    threshold: 300.0
-                )
-                
-                modelEntity = try Entity.load(
-                    contentsOf: dicom3DURL
-                )
-                    
-            } catch { print(error.localizedDescription) }
-        }
+        } catch { print(error.localizedDescription) }
     }
 }
