@@ -550,7 +550,6 @@
 				E3286BD42D06EE4800E95768 /* DcmVision */,
 				E3CF6BF62D637FD60003E156 /* Dependencies */,
 				E39BB8452D08521600426BE2 /* README.md */,
-				E3DC13282D75A860005173CF /* Frameworks */,
 				E3286BD32D06EE4800E95768 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -572,13 +571,6 @@
 				E3CF6BF52D637FD60003E156 /* setup-dependencies.sh */,
 			);
 			path = Dependencies;
-			sourceTree = "<group>";
-		};
-		E3DC13282D75A860005173CF /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
