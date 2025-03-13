@@ -44,7 +44,7 @@ Since pre-compiled binaries for visionOS are not available, these libraries must
 
 ### DICOM Data Sets
 
-For the example to work, DICOM files (Data Sets) must be directly included in the application. To achieve this, use the pre-existing **DicomFiles** group and add all the required directories under it. The way this is currently handled in the project, is by using **Build Phases** -> **Copy Files** phase to manually copy all the dicom files in the application bundle. You may need to adjust settings according to your data sets.
+The project has recently been refactored to allow the usage of **any** DICOM Data Set. It will be possible to select the directory containing the files directly from **within the application**. Previously the files had to be bundled with the project itself.
 
 ### Finalizing
 
