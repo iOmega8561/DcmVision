@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GridStackView: View {
     
-    let directoryURL: URL
+    let dataSet: DicomDataSet
     
     @State private var dicomURLs: [URL]? = nil
     @State private var error: String? = nil
@@ -29,7 +29,7 @@ struct GridStackView: View {
                         ToolbarItem(placement: .automatic) {
                             
                             Button("Show 3D visualization") {
-                                openWindow(id: "volume", value: directoryURL)
+                                openWindow(id: "volume", value: dataSet)
                             }
                         }
                     }
@@ -50,7 +50,7 @@ struct GridStackView: View {
     func loadFileURLs() throws -> [URL] {
         
         let fileURLs = try FileManager.default.contentsOfDirectory(
-            at: directoryURL,
+            at: dataSet.url,
             includingPropertiesForKeys: nil
         )
         

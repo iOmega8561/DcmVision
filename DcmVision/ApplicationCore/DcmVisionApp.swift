@@ -18,10 +18,10 @@ struct DcmVisionApp: App {
         }
         .windowResizability(.contentSize)
         
-        WindowGroup(id: "dicom", for: URL.self) { url in
+        WindowGroup(id: "dicom", for: DicomDataSet.self) { value in
             
-            if let directoryURL = url.wrappedValue {
-                GridStackView(directoryURL: directoryURL)
+            if let dataSet = value.wrappedValue {
+                GridStackView(dataSet: dataSet)
                     .frame(
                         minWidth: 500,
                         maxWidth: 1250,
@@ -31,10 +31,10 @@ struct DcmVisionApp: App {
         }
         .windowResizability(.contentSize)
         
-        WindowGroup(id: "volume", for: URL.self) { url in
+        WindowGroup(id: "volume", for: DicomDataSet.self) { value in
             
-            if let directoryURL = url.wrappedValue {
-                ModelView(directoryURL: directoryURL)
+            if let dataSet = value.wrappedValue {
+                ModelView(dataSet: dataSet)
             }
         }
         .windowStyle(.volumetric)

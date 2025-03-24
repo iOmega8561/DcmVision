@@ -15,11 +15,10 @@ struct VisualizationToolkit {
     
     // MARK: - Properties
     
-    /// The cache directory where temporary files are stored.
-    private let cacheDirectory: URL
-    
     /// The underlying VTKWrapper instance that provides access to VTK functionalities.
-    private let vtkWrapper: VTKWrapper
+    private let vtkWrapper: VTKWrapper = .init(cacheDirectoryURL: .cacheDirectory)
+    
+    // MARK: - Private Methods
     
     /// Converts an OBJ file to USD format.
     ///
@@ -62,7 +61,7 @@ struct VisualizationToolkit {
     private func getNamedUSDFromCache(_ fileName: String) throws -> URL {
                 
         let fileHandle = try FileHandle(
-            forReadingFrom: cacheDirectory.appendingPathComponent(fileName, conformingTo: .usd)
+            forReadingFrom: .cacheDirectory.appendingPathComponent(fileName, conformingTo: .usd)
         )
         
         let headerData = fileHandle.readData(ofLength: "PXR-USDC".count)
@@ -73,7 +72,7 @@ struct VisualizationToolkit {
             throw DcmVisionError.invalidFile
         }
         
-        return cacheDirectory.appendingPathComponent(fileName, conformingTo: .usd)
+        return .cacheDirectory.appendingPathComponent(fileName, conformingTo: .usd)
     }
     
     // MARK: - Public Methods
@@ -111,29 +110,5 @@ struct VisualizationToolkit {
         }
         
         return try convertToUSD(vtkOutput)
-    }
-    
-    // MARK: - Initialization
-    
-    /// Initializes a new instance of VisualizationToolkit.
-    ///
-    /// This initializer retrieves a cache directory from the user's caches folder and
-    /// instantiates the VTKWrapper with that directory.
-    ///
-    /// - Throws: `DcmVisionError.noCacheDirectory` if no cache directory can be found.
-    init() throws {
-        
-        // Retrieve the system cache directory
-        guard let cacheDirectory = FileManager.default.urls(
-            for: .cachesDirectory,
-            in: .userDomainMask
-        ).first else {
-            throw DcmVisionError.noCacheDirectory
-        }
-        
-        self.cacheDirectory = cacheDirectory
-        
-        // Initialize the VTKWrapper with the cache directory.
-        self.vtkWrapper = VTKWrapper(cacheDirectoryURL: cacheDirectory)
     }
 }
