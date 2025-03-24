@@ -16,11 +16,6 @@ struct DicomToolkit {
     
     // MARK: - Properties
     
-    /// **Cache Directory**
-    ///
-    /// The directory where converted DICOM images (BMP format) are temporarily stored.
-    private let cacheDirectory: URL
-    
     /// **DCMTK Wrapper**
     ///
     /// An instance of `DCMTKWrapper`, which interacts with the **DCMTK** library
@@ -64,7 +59,7 @@ struct DicomToolkit {
     /// - Throws: `DcmVisionError.invalidImage` if the image cannot be loaded.
     private func imageFromFile(named fileName: String) throws -> UIImage {
         
-        let imageData = try Data(contentsOf: cacheDirectory.appendingPathComponent(
+        let imageData = try Data(contentsOf: .cacheDirectory.appendingPathComponent(
             fileName,
             conformingTo: .bmp
         ))
@@ -160,22 +155,13 @@ struct DicomToolkit {
     
     /// **Initialize `DicomToolkit`**
     ///
-    /// - Sets up the cache directory for storing temporary images.
     /// - Initializes `DCMTKWrapper` with the cache directory.
     init() throws {
-
-        guard let cacheDirectory = FileManager.default.urls(
-            for: .cachesDirectory,
-            in: .userDomainMask
-        ).first else {
-            throw DcmVisionError.noCacheDirectory
-        }
         
-        guard let dicomToolkit = DCMTKWrapper(cacheDirectoryURL: cacheDirectory) else {
+        guard let dicomToolkit = DCMTKWrapper(cacheDirectoryURL: .cacheDirectory) else {
             throw DcmVisionError.dcmtkFailedInit
         }
         
-        self.cacheDirectory = cacheDirectory
         self.dicomToolkit = dicomToolkit
     }
 }

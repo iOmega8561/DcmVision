@@ -13,6 +13,8 @@ struct ContentView: View {
     
     @State private var fileImporterIsPresented: Bool = false
     
+    @State private var error: Error? = nil
+    
     @Environment(\.openWindow) private var openWindow
     
     var body: some View {
@@ -29,20 +31,33 @@ struct ContentView: View {
             }
             
         }
+        
+        .alert("Error", isPresented: .constant(error != nil)) {
+            Button("OK") {
+                error = nil
+            }
+            
+        } message: {
+            Text(error?.localizedDescription ?? "Error")
+        }
+        
         .fileImporter(
             isPresented: $fileImporterIsPresented,
             allowedContentTypes: [.folder],
             allowsMultipleSelection: false
         ) { result in
             
-            guard let urls = try? result.get() else {
-                return
-            }
-            
-            if let directoryURL = urls.first {
+            guard let urls = try? result.get(),
+                  let directoryURL = urls.first else { return }
+           
+            do {
+                let dataSet = try DicomDataSet.createNew(
+                    originURL: directoryURL
+                )
                 
-                openWindow(id: "dicom", value: directoryURL)
-            }
+                openWindow(id: "dicom", value: dataSet)
+                
+            } catch { self.error = error }
         }
     }
 }
