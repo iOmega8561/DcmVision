@@ -36,26 +36,17 @@ struct GridContainerView: View {
         } else {
             
             LoadingView()
-                .task {
-                    do {
-                        dicomURLs = try loadFileURLs()
-                        
-                    } catch { self.error = error.localizedDescription }
+                .onAppear {
+                    
+                    Task.detached(priority: .utility) {
+                        do {
+                            let sortedSlices = try dataSet.sortedSlices()
+                            
+                            await MainActor.run { self.dicomURLs = sortedSlices }
+                            
+                        } catch { await MainActor.run { self.error = error.localizedDescription } }
+                    }
                 }
         }
-    }
-    
-    func loadFileURLs() throws -> [URL] {
-        
-        let fileURLs = try FileManager.default.contentsOfDirectory(
-            at: dataSet.url,
-            includingPropertiesForKeys: nil
-        )
-        
-        let dcmtk = try DicomToolkit()
-        
-        let filteredURLs = fileURLs.filter { dcmtk.isValidDICOM(at: $0) }
-        
-        return filteredURLs.sorted { $0.lastPathComponent < $1.lastPathComponent }        
     }
 }
