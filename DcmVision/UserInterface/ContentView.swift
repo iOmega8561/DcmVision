@@ -43,6 +43,8 @@ struct ContentView: View {
             if let selection {
                 GridContainerView(dataSet: selection)
                     .navigationTitle(selection.name)
+                    .id(selection.id)
+                
             } else {
                 
                 Text("Welcome to DcmVision")
