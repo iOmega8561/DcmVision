@@ -19,24 +19,29 @@ struct GridView: View {
     
     var body: some View {
         
-        ScrollView {
+        NavigationStack {
             
-            LazyVGrid(columns: gridItemLayout, spacing: 10) {
+            ScrollView {
                 
-                ForEach(dicomURLs, id: \.self.absoluteString) { url in
+                LazyVGrid(columns: gridItemLayout, spacing: 10) {
                     
-                    NavigationLink {
+                    ForEach(dicomURLs, id: \.self.absoluteString) { url in
                         
-                        ImageView(fileURL: url, showErrorDescription: true)
-                            .navigationTitle(url.lastPathComponent)
-                    } label: {
-                        
-                        ImageView(fileURL: url, showErrorDescription: false)
-                            .frame(minWidth: 150, minHeight: 150)
+                        NavigationLink {
+                            
+                            ImageView(fileURL: url, showErrorDescription: true)
+                                .navigationTitle(url.lastPathComponent)
+                        } label: {
+                            
+                            ImageView(fileURL: url, showErrorDescription: false)
+                                .frame(minWidth: 150, minHeight: 150)
+                        }
+                        .id(url)
+                        .buttonStyle(.plain)
                     }
-                    .id(url)
-                    .buttonStyle(.plain)
+                    
                 }
+                .padding()
             }
         }
     }

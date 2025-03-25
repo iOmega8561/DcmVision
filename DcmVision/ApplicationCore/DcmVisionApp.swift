@@ -14,20 +14,10 @@ struct DcmVisionApp: App {
         
         WindowGroup {
             ContentView()
-                .frame(width: 300, height: 300)
-        }
-        .windowResizability(.contentSize)
-        
-        WindowGroup(id: "dicom", for: DicomDataSet.self) { value in
-            
-            if let dataSet = value.wrappedValue {
-                GridStackView(dataSet: dataSet)
-                    .frame(
-                        minWidth: 500,
-                        maxWidth: 1250,
-                        minHeight: 500
-                    )
-            }
+                .frame(
+                    minWidth: 1000,
+                    minHeight: 500
+                )
         }
         .windowResizability(.contentSize)
         

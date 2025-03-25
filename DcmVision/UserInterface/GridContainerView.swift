@@ -1,5 +1,5 @@
 //
-//  GridStackView.swift
+//  GridContainerView.swift
 //  DcmVision
 //
 //  Created by Giuseppe Rocco on 09/12/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GridStackView: View {
+struct GridContainerView: View {
     
     let dataSet: DicomDataSet
     
@@ -18,32 +18,30 @@ struct GridStackView: View {
     
     var body: some View {
         
-        NavigationStack {
+        if let dicomURLs {
             
-            if let dicomURLs {
-                
-                GridView(dicomURLs: dicomURLs)
-                    .navigationTitle("DICOM Data Set")
-                    .toolbar {
+            GridView(dicomURLs: dicomURLs)
+                .toolbar {
+                    ToolbarItem(placement: .automatic) {
                         
-                        ToolbarItem(placement: .automatic) {
-                            
-                            Button("Show 3D visualization") {
-                                openWindow(id: "volume", value: dataSet)
-                            }
+                        Button("Show 3D visualization") {
+                            openWindow(id: "volume", value: dataSet)
                         }
                     }
-                
-            } else if let error {
-                ErrorView(error: error)
-                
-            } else { LoadingView() }
-        }
-        .task {
-            do {
-                dicomURLs = try loadFileURLs()
-                
-            } catch { self.error = error.localizedDescription }
+                }
+            
+        } else if let error {
+            ErrorView(error: error)
+            
+        } else {
+            
+            LoadingView()
+                .task {
+                    do {
+                        dicomURLs = try loadFileURLs()
+                        
+                    } catch { self.error = error.localizedDescription }
+                }
         }
     }
     

@@ -12,24 +12,44 @@ import UniformTypeIdentifiers
 struct ContentView: View {
     
     @State private var fileImporterIsPresented: Bool = false
-    
     @State private var error: Error? = nil
+    
+    @State private var dataSets: [DicomDataSet] = []
+    @State private var selection: DicomDataSet? = nil
     
     @Environment(\.openWindow) private var openWindow
     
     var body: some View {
         
-        VStack {
-    
-            Text("Welcome to DcmVision")
-                .font(.largeTitle)
-                .multilineTextAlignment(.center)
-                .padding(.vertical)
+        NavigationSplitView {
             
-            Button("Pick a DICOM directory") {
-                fileImporterIsPresented = true
+            List(dataSets) { dataSet in
+                
+                Button(dataSet.name) {
+                    selection = dataSet
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .automatic) {
+                    
+                    Button("Pick a DICOM directory", systemImage: "plus") {
+                        fileImporterIsPresented = true
+                    }
+                }
             }
             
+        } detail: {
+            
+            if let selection {
+                GridContainerView(dataSet: selection)
+                    .navigationTitle(selection.name)
+            } else {
+                
+                Text("Welcome to DcmVision")
+                    .font(.largeTitle)
+                    .multilineTextAlignment(.center)
+                    .padding(.vertical)
+            }
         }
         
         .alert("Error", isPresented: .constant(error != nil)) {
@@ -55,7 +75,8 @@ struct ContentView: View {
                     originURL: directoryURL
                 )
                 
-                openWindow(id: "dicom", value: dataSet)
+                dataSets.append(dataSet)
+                selection = dataSet
                 
             } catch { self.error = error }
         }
