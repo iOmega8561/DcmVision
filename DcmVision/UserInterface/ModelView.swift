@@ -51,7 +51,7 @@ struct ModelView: View {
     
     func bootstrap() async throws -> Entity {
         
-        let visualizationToolkit: VisualizationToolkit = try .init()
+        let visualizationToolkit: VisualizationToolkit = .init()
         
         let dicom3DURL: URL = try visualizationToolkit.generateDICOM(
             fromDirectory: dataSet.url,
