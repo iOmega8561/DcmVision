@@ -7,7 +7,7 @@
 //  This Objective-C++ implementation provides basic VTK functionalities, including
 //  verifying that VTK is properly linked, generating simple geometrical objects, and
 //  extracting surfaces from DICOM datasets via Marching Cubes. The common logic for
-//  exporting vtkPolyData to an OBJ file is encapsulated in a private helper method.
+//  exporting vtkPolyData to a PLY file is encapsulated in a private helper method.
 //
 
 #import <Foundation/Foundation.h>
@@ -18,7 +18,7 @@
 
 #import <vtkSmartPointer.h>
 #import <vtkSphereSource.h>
-#import <vtkOBJWriter.h>
+#import <vtkPLYWriter.h>
 #import <vtkDICOMImageReader.h>
 #import <vtkMarchingCubes.h>
 #import <vtkPolyData.h>
@@ -46,12 +46,12 @@
 }
 
 /// @brief Reads a directory of DICOM files, reconstructs a 3D isosurface using Marching Cubes,
-///        and exports the resulting mesh as an OBJ file.
+///        and exports the resulting mesh as a PLY file.
 /// @param dicomDir Filesystem path to a directory containing DICOM files.
-/// @param fileName The base file name (without extension) for the OBJ output.
+/// @param fileName The base file name (without extension) for the PLY output.
 /// @param threshold The isosurface threshold used by Marching Cubes.
 ///        For CT data in Hounsfield units, a value such as ~300 might capture bone.
-/// @return The full filesystem path to the generated OBJ file, or nil on error.
+/// @return The full filesystem path to the generated PLY file, or nil on error.
 - (NSString *)generate3DModelFromDICOMDirectory:(NSString *)dicomDir
                                        fileName:(NSString *)fileName
                                       threshold:(double)threshold {
@@ -81,30 +81,30 @@
     }
 }
 
-/// @brief Helper method to export vtkPolyData as an OBJ file.
+/// @brief Helper method to export vtkPolyData as a PLY file.
 /// @param polyData A pointer to the vtkPolyData to be exported.
 /// @param fileName The base file name (without extension) to use for the exported file.
-/// @return The full filesystem path to the generated OBJ file, or nil on error.
+/// @return The full filesystem path to the generated PLY file, or nil on error.
 - (NSString *)exportPolyData:(vtkPolyData *)polyData withFileName:(NSString *)fileName {
     
     @try {
         
         // Define the output file path based on the cachePath property.
         NSString *outputPath = [_cachePath stringByAppendingPathComponent:
-                                [NSString stringWithFormat:@"%@.obj", fileName]];
+                                [NSString stringWithFormat:@"%@.ply", fileName]];
         std::string stdFilePath = [outputPath UTF8String];
         
-        // Create and configure the OBJ writer.
-        vtkSmartPointer<vtkOBJWriter> writer = vtkSmartPointer<vtkOBJWriter>::New();
+        // Create and configure the PLY writer.
+        vtkSmartPointer<vtkPLYWriter> writer = vtkSmartPointer<vtkPLYWriter>::New();
         writer->SetFileName(stdFilePath.c_str());
         writer->SetInputData(polyData);
         writer->Write();
         
-        NSLog(@"✅ Successfully exported OBJ to %@", outputPath);
+        NSLog(@"✅ Successfully exported PLY to %@", outputPath);
         return outputPath;
         
     } @catch (NSException *exception) {
-        NSLog(@"❌ Error exporting vtkPolyData to OBJ: %@", exception);
+        NSLog(@"❌ Error exporting vtkPolyData to PLY: %@", exception);
         return nil;
     }
 }
