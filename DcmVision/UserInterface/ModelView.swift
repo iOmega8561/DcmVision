@@ -20,11 +20,19 @@ struct ModelView: View {
         
         RealityView { _ in
             
-            Task {
+            Task.detached(priority: .utility) {
                 do {
-                    modelEntity = try await bootstrap()
+                    let isoSurface = try dataSet.isoSurface(huThreshold: 300)
+                    let modelEntity = try await ModelEntity(contentsOf: isoSurface)
                     
-                } catch { self.error = error }
+                    await MainActor.run {
+                        modelEntity.model?.materials = [
+                            SimpleMaterial(color: .white, isMetallic: false)
+                        ]
+                        
+                        self.modelEntity = modelEntity
+                    }
+                } catch { await MainActor.run { self.error = error } }
             }
             
         } update: { content in
@@ -47,24 +55,5 @@ struct ModelView: View {
                 
             } else if modelEntity == nil { LoadingView() }
         }
-    }
-    
-    func bootstrap() async throws -> Entity {
-        
-        let visualizationToolkit: VisualizationToolkit = .init()
-        
-        let dicom3DURL: URL = try visualizationToolkit.generateDICOM(
-            fromDirectory: dataSet.url,
-            withName: dataSet.name,
-            threshold: 300.0
-        )
-        
-        let modelEntity = try await ModelEntity(contentsOf: dicom3DURL)
-        
-        modelEntity.model?.materials = [
-            SimpleMaterial(color: .white, isMetallic: false)
-        ]
-        
-        return modelEntity
     }
 }

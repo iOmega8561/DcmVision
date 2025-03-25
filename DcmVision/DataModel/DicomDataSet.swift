@@ -46,6 +46,43 @@ struct DicomDataSet: Identifiable, Hashable, Codable {
         .cacheDirectory.appendingPathComponent(id.uuidString)
     }
     
+    /// Returns the list of valid DICOM files in the dataset, sorted by filename.
+    ///
+    /// Uses `DicomToolkit` to filter out invalid or non-DICOM files.
+    ///
+    /// - Throws: An error if the directory contents cannot be accessed or validated.
+    /// - Returns: An array of sorted file URLs corresponding to valid DICOM slices.
+    nonisolated func sortedSlices() throws -> [URL] {
+        
+        let fileURLs = try FileManager.default.contentsOfDirectory(
+            at: self.url,
+            includingPropertiesForKeys: nil
+        )
+        
+        let dcmtk = try DicomToolkit()
+        let filteredURLs = fileURLs.filter { dcmtk.isValidDICOM(at: $0) }
+        
+        return filteredURLs.sorted { $0.lastPathComponent < $1.lastPathComponent }
+    }
+    
+    /// Generates a 3D isosurface representation from the DICOM dataset using a given HU threshold.
+    ///
+    /// This method utilizes `VisualizationToolkit` to perform the surface generation based on intensity values.
+    ///
+    /// - Parameter huThreshold: The threshold in Hounsfield units to construct the surface.
+    /// - Throws: An error if surface generation fails.
+    /// - Returns: A URL to the generated surface model file.
+    nonisolated func isoSurface(huThreshold: Double) throws -> URL {
+        
+        let visualizationToolkit: VisualizationToolkit = .init()
+        
+        return try visualizationToolkit.generateDICOM(
+            fromDirectory: self.url,
+            withName: self.name,
+            threshold: huThreshold
+        )
+    }
+    
     /// Initializes a new `DicomDataSet` with its core properties.
     ///
     /// This initializer is private to enforce creation via `createNew`.
