@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
-
 import RealityKit
+import RealityKitContent
 
 struct ModelView: View {
             
@@ -26,9 +26,32 @@ struct ModelView: View {
                     let modelEntity = try await ModelEntity(contentsOf: isoSurface)
                     
                     await MainActor.run {
+                        
+                        modelEntity.transform.scale = [0.0015, 0.0015, 0.0015]
+                        
+                        modelEntity.transform.rotation = .init(
+                            angle: -.pi*1.5,
+                            axis: [1, 0, 0]
+                        )
+                        
                         modelEntity.model?.materials = [
                             SimpleMaterial(color: .white, isMetallic: false)
                         ]
+                        
+                        let boundingBox = modelEntity.visualBounds(relativeTo: nil)
+                        let boundingBoxCenter = boundingBox.center
+                        
+                        modelEntity.components.set(InputTargetComponent(allowedInputTypes: .indirect))
+                        modelEntity.generateCollisionShapes(recursive: true)
+                        modelEntity.components.set(ObjComponent())
+                        
+                        modelEntity.position = [
+                            -boundingBoxCenter.x,
+                            -boundingBoxCenter.y + 1.5,
+                            -boundingBoxCenter.z - 1.5
+                        ]
+                        
+                        modelEntity.setDirectGestures(enabled: true)
                         
                         self.modelEntity = modelEntity
                     }
@@ -38,13 +61,6 @@ struct ModelView: View {
         } update: { content in
             
             if let modelEntity {
-                                
-                modelEntity.transform.scale = [0.0015, 0.0015, 0.0015]
-                
-                modelEntity.transform.rotation = .init(
-                    angle: -.pi*1.5,
-                    axis: [1, 0, 0]
-                )
                 
                 content.add(modelEntity)
             }

@@ -15,6 +15,7 @@ struct GridContainerView: View {
     @State private var error: String? = nil
     
     @Environment(\.openWindow) private var openWindow
+    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
     
     var body: some View {
         
@@ -25,7 +26,9 @@ struct GridContainerView: View {
                     ToolbarItem(placement: .automatic) {
                         
                         Button("Show 3D visualization") {
-                            openWindow(id: "volume", value: dataSet)
+                            Task {
+                                await openImmersiveSpace(id: "3Dmodel", value: dataSet)
+                            }
                         }
                     }
                 }
