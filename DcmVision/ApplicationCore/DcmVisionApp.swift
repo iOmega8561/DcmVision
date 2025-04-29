@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RealityKitContent
 
 @main
 struct DcmVisionApp: App {
@@ -21,12 +22,16 @@ struct DcmVisionApp: App {
         }
         .windowResizability(.contentSize)
         
-        WindowGroup(id: "volume", for: DicomDataSet.self) { value in
+        ImmersiveSpace(id: "3Dmodel", for: DicomDataSet.self) { value in
             
             if let dataSet = value.wrappedValue {
                 ModelView(dataSet: dataSet)
             }
         }
-        .windowStyle(.volumetric)
+        
      }
+    
+    init() {
+        RealityKitContent.ObjComponent.registerComponent()
+    }
 }

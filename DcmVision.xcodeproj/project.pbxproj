@@ -6,10 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E3EB86A82DC145F900BD3DA5 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = E3EB86A72DC145F900BD3DA5 /* RealityKitContent */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		E3286BD22D06EE4800E95768 /* DcmVision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DcmVision.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E39BB8452D08521600426BE2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E3CF6BF52D637FD60003E156 /* setup-dependencies.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "setup-dependencies.sh"; sourceTree = "<group>"; };
+		E3EB86A32DC145AC00BD3DA5 /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -538,6 +543,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3EB86A82DC145F900BD3DA5 /* RealityKitContent in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -549,6 +555,7 @@
 			children = (
 				E3286BD42D06EE4800E95768 /* DcmVision */,
 				E3CF6BF62D637FD60003E156 /* Dependencies */,
+				E3EB86A42DC145AC00BD3DA5 /* Packages */,
 				E39BB8452D08521600426BE2 /* README.md */,
 				E3286BD32D06EE4800E95768 /* Products */,
 			);
@@ -573,6 +580,14 @@
 			path = Dependencies;
 			sourceTree = "<group>";
 		};
+		E3EB86A42DC145AC00BD3DA5 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				E3EB86A32DC145AC00BD3DA5 /* RealityKitContent */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -595,6 +610,7 @@
 			);
 			name = DcmVision;
 			packageProductDependencies = (
+				E3EB86A72DC145F900BD3DA5 /* RealityKitContent */,
 			);
 			productName = DicomTest;
 			productReference = E3286BD22D06EE4800E95768 /* DcmVision.app */;
@@ -625,6 +641,9 @@
 			);
 			mainGroup = E3286BC92D06EE4800E95768;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				E3EB86A62DC145F900BD3DA5 /* XCLocalSwiftPackageReference "Packages/RealityKitContent" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E3286BD32D06EE4800E95768 /* Products */;
 			projectDirPath = "";
@@ -880,6 +899,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		E3EB86A62DC145F900BD3DA5 /* XCLocalSwiftPackageReference "Packages/RealityKitContent" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/RealityKitContent;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E3EB86A72DC145F900BD3DA5 /* RealityKitContent */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RealityKitContent;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E3286BCA2D06EE4800E95768 /* Project object */;
 }
