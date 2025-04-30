@@ -22,6 +22,10 @@
 #import <vtkDICOMImageReader.h>
 #import <vtkMarchingCubes.h>
 #import <vtkPolyData.h>
+#import <vtkCleanPolyData.h>
+#import <vtkDecimatePro.h>
+#import <vtkTransform.h>
+#import <vtkTransformPolyDataFilter.h>
 
 #pragma clang diagnostic pop
 
@@ -72,14 +76,57 @@
         // 3) Retrieve the resulting 3D model (polydata).
         vtkSmartPointer<vtkPolyData> polyData = mc->GetOutput();
         
-        // 4) Export the polydata using the common export method.
-        return [self exportPolyData:polyData withFileName:fileName];
+        // 4) Process the polyData for better compatibility with Vision Pro
+        vtkSmartPointer<vtkPolyData> processedPolyData = [self processPolyData:polyData];
+        
+        // 5) Export the clean polydata using the common export method.
+        return [self exportPolyData:processedPolyData withFileName:fileName];
         
     } @catch (NSException *exception) {
         NSLog(@"❌ Error generating 3D model from DICOM: %@", exception);
         return nil;
     }
 }
+
+/// @brief  Reduce polygon count and uniformly scale a mesh for efficient display on Apple Vision Pro.
+/// @details This routine applies a mesh decimation to cut the triangle count in half,
+///          then scales the model down to 10% of its original size, and finally cleans up
+///          any unused points or degenerate cells. The result is a lighter-weight, correctly
+///          sized vtkPolyData that’s ready for immersive display.
+/// @param  polyData The input vtkPolyData to process. Must be non-null.
+/// @return A new vtkSmartPointer<vtkPolyData> containing the decimated, scaled, and cleaned mesh.
+///         Returns nullptr if an error occurs during processing.
+- (vtkSmartPointer<vtkPolyData>)processPolyData:(vtkSmartPointer<vtkPolyData>)polyData {
+    
+    if (!polyData) {
+        NSLog(@"⚠️ processPolyData: received null input");
+        return nullptr;
+    }
+
+    // 1) Decimate: reduce to 50% of original polys while preserving topology.
+    vtkSmartPointer<vtkDecimatePro> decimator = vtkSmartPointer<vtkDecimatePro>::New();
+    decimator->SetInputData(polyData);
+    decimator->SetTargetReduction(0.5);
+    decimator->PreserveTopologyOn();
+    decimator->Update();
+
+    // 2) Uniform scale: shrink the mesh to 10% in all dimensions
+    vtkSmartPointer<vtkTransform> transform = vtkSmartPointer<vtkTransform>::New();
+    transform->Scale(0.1, 0.1, 0.1);
+
+    vtkSmartPointer<vtkTransformPolyDataFilter> transformFilter = vtkSmartPointer<vtkTransformPolyDataFilter>::New();
+    transformFilter->SetInputConnection(decimator->GetOutputPort());
+    transformFilter->SetTransform(transform);
+    transformFilter->Update();
+
+    // 3) Clean up: merge duplicate points and remove unused data
+    vtkSmartPointer<vtkCleanPolyData> cleaner = vtkSmartPointer<vtkCleanPolyData>::New();
+    cleaner->SetInputConnection(transformFilter->GetOutputPort());
+    cleaner->Update();
+
+    return cleaner->GetOutput();
+}
+
 
 /// @brief Helper method to export vtkPolyData as a PLY file.
 /// @param polyData A pointer to the vtkPolyData to be exported.
