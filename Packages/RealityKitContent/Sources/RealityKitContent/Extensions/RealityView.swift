@@ -1,9 +1,9 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-App-specific extension on RealityView.
-*/
+//
+//  RealityView.swift
+//  DcmVision
+//
+//  Created by Giuseppe Rocco on 30/04/25.
+//
 
 import Foundation
 import RealityKit

@@ -41,15 +41,15 @@ struct ModelView: View {
                         let boundingBox = modelEntity.visualBounds(relativeTo: nil)
                         let boundingBoxCenter = boundingBox.center
                         
-                        modelEntity.components.set(InputTargetComponent(allowedInputTypes: .indirect))
-                        modelEntity.generateCollisionShapes(recursive: true)
-                        modelEntity.components.set(ObjComponent())
-                        
                         modelEntity.position = [
                             -boundingBoxCenter.x,
                             -boundingBoxCenter.y + 1.5,
                             -boundingBoxCenter.z - 1.5
                         ]
+                        
+                        modelEntity.components.set(InputTargetComponent(allowedInputTypes: .indirect))
+                        modelEntity.generateCollisionShapes(recursive: true)
+                        modelEntity.components.set(GestureComponent())
                         
                         modelEntity.setDirectGestures(enabled: true)
                         
@@ -65,11 +65,6 @@ struct ModelView: View {
                 content.add(modelEntity)
             }
         }
-        .overlay {
-            if modelEntity == nil, let error {
-                ErrorView(error: error)
-                
-            } else if modelEntity == nil { LoadingView() }
-        }
+        .installGestures()
     }
 }

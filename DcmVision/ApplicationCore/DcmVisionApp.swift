@@ -28,10 +28,9 @@ struct DcmVisionApp: App {
                 ModelView(dataSet: dataSet)
             }
         }
-        
-     }
+    }
     
     init() {
-        RealityKitContent.ObjComponent.registerComponent()
+        RealityKitContent.GestureComponent.registerComponent()
     }
 }

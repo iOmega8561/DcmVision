@@ -1,17 +1,18 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-App-specific extension on Entity.
-*/
+//
+//  Entity.swift
+//  DcmVision
+//
+//  Created by Giuseppe Rocco on 30/04/25.
+//
 
 import Foundation
 import RealityKit
 
 public extension Entity {
-    var gestureComponent: ObjComponent? {
-        get { components[ObjComponent.self] }
-        set { components[ObjComponent.self] = newValue }
+    
+    var gestureComponent: GestureComponent? {
+        get { components[GestureComponent.self] }
+        set { components[GestureComponent.self] = newValue }
     }
     
     /// Returns the position of the entity specified in the app's coordinate system. On
@@ -28,5 +29,23 @@ public extension Entity {
     var sceneOrientation: simd_quatf {
         get { orientation(relativeTo: nil) }
         set { setOrientation(newValue, relativeTo: nil) }
+    }
+    
+    func setDirectGestures(enabled: Bool) {
+        
+        guard var component = self.gestureComponent else {
+            
+            #if DEBUG
+            print("No gesture component found on entity with ID: \(self.id)")
+            #endif
+            
+            return
+        }
+        
+        component.canDrag = enabled
+        component.canRotate = enabled
+        component.canScale = enabled
+        component.pivotOnDrag = enabled
+        component.preserveOrientationOnPivotDrag = enabled
     }
 }
