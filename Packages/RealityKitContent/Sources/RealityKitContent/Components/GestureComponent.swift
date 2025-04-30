@@ -1,14 +1,14 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-A component that handles standard drag, rotate, and scale gestures for an entity.
-*/
+//
+//  GestureComponent.swift
+//  DcmVision
+//
+//  Created by Giuseppe Rocco on 30/04/25.
+//
 
 import RealityKit
 import SwiftUI
 
-final public class EntityGestureState{
+public class EntityGestureState {
     
     /// The entity currently being dragged if a gesture is in progress.
     var targetedEntity: Entity?
@@ -51,7 +51,7 @@ final public class EntityGestureState{
 // MARK: -
 
 /// A component that handles gesture logic for an entity.
-public struct ObjComponent: Component, Codable {
+@MainActor public struct GestureComponent: Component, Codable {
     
     /// A Boolean value that indicates whether a gesture can drag the entity.
     public var canDrag: Bool = true
@@ -76,7 +76,7 @@ public struct ObjComponent: Component, Codable {
     // MARK: - Drag Logic
     
     /// Handle `.onChanged` actions for drag gestures.
-    @MainActor mutating func onChanged(value: EntityTargetValue<DragGesture.Value>) {
+    mutating func onChanged(value: EntityTargetValue<DragGesture.Value>) {
         guard canDrag else { return }
         
         let state = EntityGestureState.shared
@@ -94,7 +94,7 @@ public struct ObjComponent: Component, Codable {
         }
     }
     
-    @MainActor mutating private func handlePivotDrag(value: EntityTargetValue<DragGesture.Value>) {
+    mutating private func handlePivotDrag(value: EntityTargetValue<DragGesture.Value>) {
         
         let state = EntityGestureState.shared
         guard let entity = state.targetedEntity else { fatalError("Gesture contained no entity") }
@@ -146,13 +146,13 @@ public struct ObjComponent: Component, Codable {
         }
     }
     
-    @MainActor mutating private func handleFixedDrag(value: EntityTargetValue<DragGesture.Value>) {
+    mutating private func handleFixedDrag(value: EntityTargetValue<DragGesture.Value>) {
         let state = EntityGestureState.shared
         guard let entity = state.targetedEntity else { fatalError("Gesture contained no entity") }
         
         if !state.isDragging {
             state.isDragging = true
-            state.dragStartPosition = entity.position
+            state.dragStartPosition = entity.scenePosition
         }
    
         let translation3D = value.convert(value.gestureValue.translation3D, from: .local, to: .scene)
@@ -161,7 +161,7 @@ public struct ObjComponent: Component, Codable {
                                   y: Float(translation3D.y),
                                   z: Float(translation3D.z))
         
-        entity.position = state.dragStartPosition + offset
+        entity.scenePosition = state.dragStartPosition + offset
         if let initialOrientation = state.initialOrientation {
             state.targetedEntity?.setOrientation(initialOrientation, relativeTo: nil)
         }
@@ -169,7 +169,7 @@ public struct ObjComponent: Component, Codable {
     }
     
     /// Handle `.onEnded` actions for drag gestures.
-    @MainActor mutating func onEnded(value: EntityTargetValue<DragGesture.Value>) {
+    mutating func onEnded(value: EntityTargetValue<DragGesture.Value>) {
         let state = EntityGestureState.shared
         state.isDragging = false
         
@@ -186,7 +186,7 @@ public struct ObjComponent: Component, Codable {
     // MARK: - Magnify (Scale) Logic
     
     /// Handle `.onChanged` actions for magnify (scale)  gestures.
-    @MainActor mutating func onChanged(value: EntityTargetValue<MagnifyGesture.Value>) {
+    mutating func onChanged(value: EntityTargetValue<MagnifyGesture.Value>) {
         let state = EntityGestureState.shared
         guard canScale, !state.isDragging else { return }
         
@@ -202,14 +202,14 @@ public struct ObjComponent: Component, Codable {
     }
     
     /// Handle `.onEnded` actions for magnify (scale)  gestures
-    @MainActor mutating func onEnded(value: EntityTargetValue<MagnifyGesture.Value>) {
+    mutating func onEnded(value: EntityTargetValue<MagnifyGesture.Value>) {
         EntityGestureState.shared.isScaling = false
     }
     
     // MARK: - Rotate Logic
     
     /// Handle `.onChanged` actions for rotate  gestures.
-    @MainActor mutating func onChanged(value: EntityTargetValue<RotateGesture3D.Value>) {
+    mutating func onChanged(value: EntityTargetValue<RotateGesture3D.Value>) {
         let state = EntityGestureState.shared
         guard canRotate, !state.isDragging else { return }
 
@@ -230,8 +230,7 @@ public struct ObjComponent: Component, Codable {
     }
     
     /// Handle `.onChanged` actions for rotate  gestures.
-    @MainActor mutating func onEnded(value: EntityTargetValue<RotateGesture3D.Value>) {
+    mutating func onEnded(value: EntityTargetValue<RotateGesture3D.Value>) {
         EntityGestureState.shared.isRotating = false
     }
 }
-

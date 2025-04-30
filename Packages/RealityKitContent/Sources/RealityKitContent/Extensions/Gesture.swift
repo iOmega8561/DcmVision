@@ -1,9 +1,9 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-App-specific extension on Gesture.
-*/
+//
+//  Gesture.swift
+//  DcmVision
+//
+//  Created by Giuseppe Rocco on 30/04/25.
+//
 
 import Foundation
 import RealityKit
@@ -19,9 +19,6 @@ public extension Gesture where Value == EntityTargetValue<RotateGesture3D.Value>
         onChanged { value in
             guard var gestureComponent = value.entity.gestureComponent else { return }
             
-//            value.entity.components[PhysicsBodyComponent.self] = .none
-            value.entity.components[PhysicsBodyComponent.self]?.isAffectedByGravity = false
-            
             gestureComponent.onChanged(value: value)
             
             value.entity.components.set(gestureComponent)
@@ -32,10 +29,6 @@ public extension Gesture where Value == EntityTargetValue<RotateGesture3D.Value>
             gestureComponent.onEnded(value: value)
             
             value.entity.components.set(gestureComponent)
-//            let material = PhysicsMaterialResource.generate(friction: 0.8, restitution: 0.0)
-//            let pb = PhysicsBodyComponent(material: material)
-//            value.entity.components.set(pb)
-            //value.entity.components[PhysicsBodyComponent.self]?.isAffectedByGravity = true
         }
     }
 }
@@ -50,9 +43,6 @@ public extension Gesture where Value == EntityTargetValue<DragGesture.Value> {
         onChanged { value in
             guard var gestureComponent = value.entity.gestureComponent else { return }
             
-//            value.entity.components[PhysicsBodyComponent.self] = .none
-            value.entity.components[PhysicsBodyComponent.self]?.isAffectedByGravity = false
-            
             gestureComponent.onChanged(value: value)
             
             value.entity.components.set(gestureComponent)
@@ -63,10 +53,6 @@ public extension Gesture where Value == EntityTargetValue<DragGesture.Value> {
             gestureComponent.onEnded(value: value)
             
             value.entity.components.set(gestureComponent)
-//            let material = PhysicsMaterialResource.generate(friction: 0.8, restitution: 0.0)
-//            let pb = PhysicsBodyComponent(material: material)
-//            value.entity.components.set(pb)
-            //value.entity.components[PhysicsBodyComponent.self]?.isAffectedByGravity = true
         }
     }
 }
@@ -81,8 +67,6 @@ public extension Gesture where Value == EntityTargetValue<MagnifyGesture.Value> 
         onChanged { value in
             guard var gestureComponent = value.entity.gestureComponent else { return }
             
-            value.entity.components[PhysicsBodyComponent.self]?.isAffectedByGravity = false
-            
             gestureComponent.onChanged(value: value)
             
             value.entity.components.set(gestureComponent)
@@ -93,10 +77,6 @@ public extension Gesture where Value == EntityTargetValue<MagnifyGesture.Value> 
             gestureComponent.onEnded(value: value)
             
             value.entity.components.set(gestureComponent)
-//            let material = PhysicsMaterialResource.generate(friction: 0.8, restitution: 0.0)
-//            let pb = PhysicsBodyComponent(material: material)
-//            value.entity.components.set(pb)
-            //value.entity.components[PhysicsBodyComponent.self]?.isAffectedByGravity = true
         }
     }
 }
