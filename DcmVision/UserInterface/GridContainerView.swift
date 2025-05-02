@@ -5,7 +5,7 @@
 //  Created by Giuseppe Rocco on 09/12/24.
 //
 
-import SwiftUI
+import Tools4SwiftUI
 
 struct GridContainerView: View {
     
@@ -16,6 +16,7 @@ struct GridContainerView: View {
     
     @Environment(\.openWindow) private var openWindow
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+    @Environment(AppModel.self) private var appModel
     
     var body: some View {
         
@@ -25,10 +26,14 @@ struct GridContainerView: View {
                 .toolbar {
                     ToolbarItem(placement: .automatic) {
                         
-                        Button("Show 3D visualization") {
-                            Task {
-                                await openImmersiveSpace(id: "3Dmodel", value: dataSet)
+                        AsyncButton("3D Visualization") {
+                            
+                            if appModel.immersiveSpaceState == .closed {
+                                appModel.immersiveSpaceState = .inTransition
+                                await openImmersiveSpace(id: "immersiveSpace")
                             }
+                            
+                            try await appModel.addDicom3DEntity(using: dataSet)
                         }
                     }
                 }
