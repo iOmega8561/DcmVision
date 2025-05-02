@@ -5,25 +5,24 @@
 //  Created by Giuseppe Rocco on 13/03/25.
 //
 
-import SwiftUI
+import Tools4SwiftUI
 
 import UniformTypeIdentifiers
 
 struct ContentView: View {
     
     @State private var fileImporterIsPresented: Bool = false
-    @State private var error: Error? = nil
     
-    @State private var dataSets: [DicomDataSet] = []
     @State private var selection: DicomDataSet? = nil
     
     @Environment(\.openWindow) private var openWindow
+    @Environment(AppModel.self) private var appModel
     
     var body: some View {
         
         NavigationSplitView {
             
-            List(dataSets) { dataSet in
+            List(appModel.dataSets) { dataSet in
                 
                 Button(dataSet.name) {
                     selection = dataSet
@@ -53,34 +52,21 @@ struct ContentView: View {
                     .padding(.vertical)
             }
         }
-        
-        .alert("Error", isPresented: .constant(error != nil)) {
-            Button("OK") {
-                error = nil
-            }
-            
-        } message: {
-            Text(error?.localizedDescription ?? "Error")
-        }
-        
-        .fileImporter(
+        .asyncFileImporter(
             isPresented: $fileImporterIsPresented,
             allowedContentTypes: [.folder],
-            allowsMultipleSelection: false
         ) { result in
             
-            guard let urls = try? result.get(),
-                  let directoryURL = urls.first else { return }
-           
-            do {
-                let dataSet = try DicomDataSet.createNew(
-                    originURL: directoryURL
-                )
-                
-                dataSets.append(dataSet)
-                selection = dataSet
-                
-            } catch { self.error = error }
+            guard let directoryURL = result.first else {
+                return
+            }
+            
+            let dataSet = try DicomDataSet.createNew(
+                originURL: directoryURL
+            )
+            
+            appModel.dataSets.append(dataSet)
+            selection = dataSet
         }
     }
 }

@@ -11,6 +11,8 @@ import RealityKitContent
 @main
 struct DcmVisionApp: App {
             
+    @State private var appModel = AppModel()
+    
     var body: some Scene {
         
         WindowGroup {
@@ -19,14 +21,19 @@ struct DcmVisionApp: App {
                     minWidth: 1000,
                     minHeight: 500
                 )
+                .environment(appModel)
         }
         .windowResizability(.contentSize)
         
-        ImmersiveSpace(id: "3Dmodel", for: DicomDataSet.self) { value in
-            
-            if let dataSet = value.wrappedValue {
-                ModelView(dataSet: dataSet)
-            }
+        ImmersiveSpace(id: "immersiveSpace") {
+            ModelView()
+                .environment(appModel)
+                .onAppear {
+                    appModel.immersiveSpaceState = .open
+                }
+                .onDisappear {
+                    appModel.immersiveSpaceState = .closed
+                }
         }
     }
     
