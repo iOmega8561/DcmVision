@@ -10,7 +10,7 @@
 /// `DicomDataSet` is used to encapsulate metadata and file references for a
 /// DICOM directory copied into the app's cache. It conforms to `Identifiable`,
 /// `Hashable`, and `Codable`, making it easy to store, compare, and use in SwiftUI views.
-struct DicomDataSet: Identifiable, Hashable, Codable {
+struct DicomDataSet: Identifiable {
     
     /// Creates a new `DicomDataSet` by copying the contents of a source directory to the cache.
     ///
@@ -32,38 +32,18 @@ struct DicomDataSet: Identifiable, Hashable, Codable {
             try FileManager.default.copyItem(at: originURL, to: destinationURL)
         }
         
-        return .init(id: newUUID, name: originURL.lastPathComponent)
+        return .init(id: newUUID, files: try DicomFile.parseDirectory(at: destinationURL))
     }
     
     /// Unique identifier for the dataset.
     let id: UUID
-    
-    /// A human-readable name for the dataset, typically the folder name of the original source.
-    let name: String
     
     /// The full URL to the cached location of the dataset.
     var url: URL {
         .cacheDirectory.appendingPathComponent(id.uuidString)
     }
     
-    /// Returns the list of valid DICOM files in the dataset, sorted by filename.
-    ///
-    /// Uses `DicomToolkit` to filter out invalid or non-DICOM files.
-    ///
-    /// - Throws: An error if the directory contents cannot be accessed or validated.
-    /// - Returns: An array of sorted file URLs corresponding to valid DICOM slices.
-    nonisolated func sortedSlices() throws -> [URL] {
-        
-        let fileURLs = try FileManager.default.contentsOfDirectory(
-            at: self.url,
-            includingPropertiesForKeys: nil
-        )
-        
-        let dcmtk = try DicomToolkit()
-        let filteredURLs = fileURLs.filter { dcmtk.isValidDICOM(at: $0) }
-        
-        return filteredURLs.sorted { $0.lastPathComponent < $1.lastPathComponent }
-    }
+    var files: [DicomFile]
     
     /// Generates a 3D isosurface representation from the DICOM dataset using a given HU threshold.
     ///
@@ -78,7 +58,7 @@ struct DicomDataSet: Identifiable, Hashable, Codable {
         
         return try visualizationToolkit.generateDICOM(
             fromDirectory: self.url,
-            withName: self.name,
+            withName: self.id.uuidString,
             threshold: huThreshold
         )
     }
@@ -90,8 +70,28 @@ struct DicomDataSet: Identifiable, Hashable, Codable {
     /// - Parameters:
     ///   - id: The UUID assigned to this dataset.
     ///   - name: The name of the dataset.
-    private init(id: UUID, name: String) {
+    private init(id: UUID, files: [DicomFile]) {
         self.id = id
-        self.name = name
+        self.files = files
+    }
+}
+
+// MARK: - Equatable
+
+extension DicomDataSet: Equatable {
+    
+    /// Compares two `DicomFile` instances for equality based on their URL.
+    static func == (lhs: DicomDataSet, rhs: DicomDataSet) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
+// MARK: - Hashable
+
+extension DicomDataSet: Hashable {
+    
+    /// Hashes the URL of the DICOM file into the given hasher.
+    func hash(into hasher: inout Hasher) {
+        id.hash(into: &hasher)
     }
 }

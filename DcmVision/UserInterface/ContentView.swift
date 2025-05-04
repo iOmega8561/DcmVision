@@ -22,11 +22,10 @@ struct ContentView: View {
         
         NavigationSplitView {
             
-            List(appModel.dataSets) { dataSet in
+            List(appModel.dataSets, selection: $selection) { dataSet in
                 
-                Button(dataSet.name) {
-                    selection = dataSet
-                }
+                RowLabel(dataSet: dataSet)
+                    .tag(dataSet)
             }
             .toolbar {
                 ToolbarItem(placement: .automatic) {
@@ -40,9 +39,15 @@ struct ContentView: View {
         } detail: {
             
             if let selection {
-                GridContainerView(dataSet: selection)
-                    .navigationTitle(selection.name)
+                GridView(dataSet: selection)
                     .id(selection.id)
+                    .navigationTitle({
+                        if case .success(let metadata) = selection.files.first?.metadata,
+                           let patientName = metadata.patientName,
+                           let studyProcedure = metadata.studyProcedure {
+                            return patientName + " - " + studyProcedure
+                        } else { return "" }
+                    }())
                 
             } else {
                 
@@ -60,11 +65,9 @@ struct ContentView: View {
             guard let directoryURL = result.first else {
                 return
             }
-            
             let dataSet = try DicomDataSet.createNew(
                 originURL: directoryURL
             )
-            
             appModel.dataSets.append(dataSet)
             selection = dataSet
         }

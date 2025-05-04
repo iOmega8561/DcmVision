@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E37214242DC4BB42001328AC /* Tools4SwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = E37214232DC4BB42001328AC /* Tools4SwiftUI */; };
 		E3EB86A82DC145F900BD3DA5 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = E3EB86A72DC145F900BD3DA5 /* RealityKitContent */; };
+		E3F8E4912DC6C08000A8EC57 /* Tools4SwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = E3F8E4902DC6C08000A8EC57 /* Tools4SwiftUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -544,8 +544,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E37214242DC4BB42001328AC /* Tools4SwiftUI in Frameworks */,
 				E3EB86A82DC145F900BD3DA5 /* RealityKitContent in Frameworks */,
+				E3F8E4912DC6C08000A8EC57 /* Tools4SwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -613,7 +613,7 @@
 			name = DcmVision;
 			packageProductDependencies = (
 				E3EB86A72DC145F900BD3DA5 /* RealityKitContent */,
-				E37214232DC4BB42001328AC /* Tools4SwiftUI */,
+				E3F8E4902DC6C08000A8EC57 /* Tools4SwiftUI */,
 			);
 			productName = DicomTest;
 			productReference = E3286BD22D06EE4800E95768 /* DcmVision.app */;
@@ -646,7 +646,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				E3EB86A62DC145F900BD3DA5 /* XCLocalSwiftPackageReference "Packages/RealityKitContent" */,
-				E37214222DC4BB42001328AC /* XCRemoteSwiftPackageReference "Tools4SwiftUI" */,
+				E3F8E48F2DC6C08000A8EC57 /* XCRemoteSwiftPackageReference "Tools4SwiftUI" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E3286BD32D06EE4800E95768 /* Products */;
@@ -910,7 +910,7 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E37214222DC4BB42001328AC /* XCRemoteSwiftPackageReference "Tools4SwiftUI" */ = {
+		E3F8E48F2DC6C08000A8EC57 /* XCRemoteSwiftPackageReference "Tools4SwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/iOmega8561/Tools4SwiftUI";
 			requirement = {
@@ -921,14 +921,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E37214232DC4BB42001328AC /* Tools4SwiftUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E37214222DC4BB42001328AC /* XCRemoteSwiftPackageReference "Tools4SwiftUI" */;
-			productName = Tools4SwiftUI;
-		};
 		E3EB86A72DC145F900BD3DA5 /* RealityKitContent */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RealityKitContent;
+		};
+		E3F8E4902DC6C08000A8EC57 /* Tools4SwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E3F8E48F2DC6C08000A8EC57 /* XCRemoteSwiftPackageReference "Tools4SwiftUI" */;
+			productName = Tools4SwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

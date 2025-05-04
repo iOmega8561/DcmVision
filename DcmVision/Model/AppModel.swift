@@ -27,7 +27,7 @@ final class AppModel: Sendable {
         let modelEntity = try await ModelEntity.fromIsoSurface(at: isoSurface)
         
         await MainActor.run {
-            modelEntity.name = dataSet.name
+            modelEntity.name = dataSet.id.uuidString
             entities.append(modelEntity)
         }
     }
@@ -36,7 +36,7 @@ final class AppModel: Sendable {
     func remodeDicom3DEntity(using dataSet: DicomDataSet) async throws {
         
         await MainActor.run {
-            entities.removeAll(where: { $0.name == dataSet.name })
+            entities.removeAll(where: { $0.name == dataSet.id.uuidString })
         }
     }
 }

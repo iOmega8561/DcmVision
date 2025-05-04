@@ -8,8 +8,6 @@
 import RealityKit
 import RealityKitContent
 
-import RealityKit
-
 extension ModelEntity {
     
     /// Creates a `ModelEntity` from an isosurface mesh file, applies default styling,
