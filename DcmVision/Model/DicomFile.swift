@@ -15,6 +15,15 @@ import SwiftUI
 ///   use in SwiftUI views and collections.
 final class DicomFile {
     
+    /// Parses a directory and returns an array of `DicomFile` instances for each valid DICOM file found.
+    ///
+    /// This method scans the specified directory for files that are valid DICOM files,
+    /// as determined by `DicomToolkit.isValidDICOM(at:)`. The resulting files are sorted
+    /// lexicographically by their filename before being wrapped as `DicomFile` instances.
+    ///
+    /// - Parameter location: The URL of the directory to scan for DICOM files.
+    /// - Returns: An array of `DicomFile` objects representing the valid DICOM files in the directory.
+    /// - Throws: An error if the directory contents cannot be read or if `DicomToolkit` initialization fails.
     static nonisolated func parseDirectory(at location: URL) throws -> [DicomFile] {
         let dcmtk = try DicomToolkit()
         
@@ -26,7 +35,7 @@ final class DicomFile {
         .sorted { $0.lastPathComponent < $1.lastPathComponent }
         .map { DicomFile(url: $0) }
     }
-    
+
     /// The file URL pointing to the DICOM file on disk.
     let url: URL
     

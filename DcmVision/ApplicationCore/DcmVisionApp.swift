@@ -39,5 +39,6 @@ struct DcmVisionApp: App {
     
     init() {
         RealityKitContent.GestureComponent.registerComponent()
+        appModel.bootstrap()
     }
 }

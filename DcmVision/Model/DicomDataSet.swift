@@ -24,7 +24,7 @@ struct DicomDataSet: Identifiable {
     /// - Parameter originURL: The URL of the original directory containing DICOM files.
     /// - Throws: An error if copying the directory or reading its contents fails.
     /// - Returns: A new `DicomDataSet` instance.
-    static func createNew(originURL: URL) throws -> DicomDataSet {
+    static nonisolated func createNew(originURL: URL) throws -> DicomDataSet {
         let newUUID: UUID = .init()
         let destinationURL: URL = .cacheDirectory.appendingPathComponent(newUUID.uuidString)
                 
@@ -38,12 +38,13 @@ struct DicomDataSet: Identifiable {
     /// Unique identifier for the dataset.
     let id: UUID
     
+    /// A list keeping references to the DICOM Files part of this Data Set
+    let files: [DicomFile]
+    
     /// The full URL to the cached location of the dataset.
     var url: URL {
         .cacheDirectory.appendingPathComponent(id.uuidString)
     }
-    
-    var files: [DicomFile]
     
     /// Generates a 3D isosurface representation from the DICOM dataset using a given HU threshold.
     ///
@@ -70,7 +71,7 @@ struct DicomDataSet: Identifiable {
     /// - Parameters:
     ///   - id: The UUID assigned to this dataset.
     ///   - name: The name of the dataset.
-    private init(id: UUID, files: [DicomFile]) {
+    init(id: UUID, files: [DicomFile]) {
         self.id = id
         self.files = files
     }
