@@ -12,7 +12,6 @@ import UniformTypeIdentifiers
 struct ContentView: View {
     
     @State private var fileImporterIsPresented: Bool = false
-    
     @State private var selection: DicomDataSet? = nil
     
     @Environment(\.openWindow) private var openWindow
@@ -26,6 +25,15 @@ struct ContentView: View {
                 
                 RowLabel(dataSet: dataSet)
                     .tag(dataSet)
+                    .contextMenu {
+                        AsyncButton("Delete", systemImage: "trash", role: .destructive) {
+                            try await appModel.removeDataSet(dataSet)
+                            
+                            if selection == dataSet {
+                                selection = nil
+                            }
+                        }
+                    }
             }
             .toolbar {
                 ToolbarItem(placement: .automatic) {
@@ -46,7 +54,8 @@ struct ContentView: View {
                            let patientName = metadata.patientName,
                            let studyProcedure = metadata.studyProcedure {
                             return patientName + " - " + studyProcedure
-                        } else { return "" }
+                            
+                        } else { return selection.id.uuidString }
                     }())
                 
             } else {
@@ -55,21 +64,25 @@ struct ContentView: View {
                     .font(.largeTitle)
                     .multilineTextAlignment(.center)
                     .padding(.vertical)
+                
+                Text("Choose a folder containing DICOM files to begin.")
+                    .foregroundColor(.secondary)
+                
+                Text("Once loaded, select a scan from the list to view its image, metadata, and 3D reconstruction.")
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.secondary)
             }
         }
         .asyncFileImporter(
             isPresented: $fileImporterIsPresented,
             allowedContentTypes: [.folder],
-        ) { result in
-            
-            guard let directoryURL = result.first else {
+        ) {
+            guard let directoryURL = $0.first else {
                 return
             }
-            let dataSet = try DicomDataSet.createNew(
-                originURL: directoryURL
+            selection = try await appModel.addDataSet(
+                from: directoryURL
             )
-            appModel.dataSets.append(dataSet)
-            selection = dataSet
         }
     }
 }
