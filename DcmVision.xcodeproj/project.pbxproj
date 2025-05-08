@@ -706,8 +706,8 @@
 					"$(PROJECT_DIR)/Dependencies/zlib/lib",
 					"$(PROJECT_DIR)/Dependencies/vtk/lib",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = giusepperocco.DicomTest;
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = giusepperocco.DcmVision;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -746,8 +746,8 @@
 					"$(PROJECT_DIR)/Dependencies/zlib/lib",
 					"$(PROJECT_DIR)/Dependencies/vtk/lib",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = giusepperocco.DicomTest;
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = giusepperocco.DcmVision;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
