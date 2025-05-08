@@ -8,56 +8,41 @@
 import SwiftUI
 
 struct ImageView: View {
-        
-    let fileURL: URL
-    let showErrorDescription: Bool
     
-    @State private var error: Error? = nil
-    @State private var dicomImage: Image? = nil
-    @State private var metadata: [String: Any] = [:]
+    let dicomFile: DicomFile
+    let isDetail: Bool
+    
+    let metadataIsShown: Bool
     
     var body: some View {
         
-        if let dicomImage = dicomImage {
+        switch(dicomFile.uiImage, dicomFile.metadata) {
+        case (.success(let uiImage), .failure(_)):
             
-            dicomImage
+            Image(uiImage: uiImage)
                 .resizable()
                 .scaledToFit()
-                .overlay(alignment: .topLeading) {
-                    
-                    VStack(alignment: .leading) {
-                        
-                        ForEach(metadata.keys.sorted(), id: \.self) { key in
-                            Text("\(key): \(metadata[key]!)")
-                        }
+                .saturation(1.5)
+                .contrast(1.2)
+                .brightness(0.05)
+            
+        case (.success(let uiImage), .success(let metadata)):
+            
+            Image(uiImage: uiImage)
+                .resizable()
+                .scaledToFit()
+                .saturation(1.5)
+                .contrast(1.2)
+                .brightness(0.05)
+                .overlay {
+                    if isDetail && metadataIsShown {
+                        MetadataOverlay(dicomMetadata: metadata)
                     }
-                    .foregroundStyle(.white)
-                    .padding()
                 }
             
-        } else if let error {
-            showErrorDescription ? ErrorView(error: error) : ErrorView()
+        case (.failure(let error), _):
             
-        } else {
-            ProgressView()
-                .scaleEffect(1.5)
-                .task {
-                    do {
-                        try bootstrap()
-                        
-                    } catch { self.error = error }
-                }
+            isDetail ? ErrorView(error: error) : ErrorView()
         }
-    }
-    
-    func bootstrap() throws {
-        
-        let dcmtk: DicomToolkit = try .init()
-                                
-        self.dicomImage = try Image(
-            uiImage: dcmtk.imageFromFile(at: fileURL)
-        )
-                
-        self.metadata = try dcmtk.metadataFromFile(at: fileURL)
     }
 }

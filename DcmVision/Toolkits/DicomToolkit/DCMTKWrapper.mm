@@ -100,6 +100,7 @@
     DcmFileFormat fileFormat;
 
     if (fileFormat.loadFile([filePath UTF8String]).good()) {
+        
         DcmDataset *dataset = fileFormat.getDataset();
         OFString value;
 
@@ -123,12 +124,61 @@
             metadata[@"Modality"] = [NSString stringWithUTF8String:value.c_str()];
         }
         
+        // Extract Patient Sex
+        if (dataset->findAndGetOFString(DCM_PatientSex, value).good()) {
+            metadata[@"PatientSex"] = [NSString stringWithUTF8String:value.c_str()];
+        }
+
+        // Extract Patient Age
+        if (dataset->findAndGetOFString(DCM_PatientAge, value).good()) {
+            metadata[@"PatientAge"] = [NSString stringWithUTF8String:value.c_str()];
+        }
+
+        // Extract Study Description
+        if (dataset->findAndGetOFString(DCM_StudyDescription, value).good()) {
+            metadata[@"StudyDescription"] = [NSString stringWithUTF8String:value.c_str()];
+        }
+
+        // Extract Slice Thickness
+        Float64 sliceThickness = 0.0;
+        if (dataset->findAndGetFloat64(DCM_SliceThickness, sliceThickness).good()) {
+            metadata[@"SliceThickness"] = @(sliceThickness);
+        }
+
+        // Extract Convolution Kernel
+        if (dataset->findAndGetOFString(DCM_ConvolutionKernel, value).good()) {
+            metadata[@"ConvolutionKernel"] = [NSString stringWithUTF8String:value.c_str()];
+        }
+
+        // Extract Study Time
+        if (dataset->findAndGetOFString(DCM_StudyTime, value).good()) {
+            metadata[@"StudyTime"] = [NSString stringWithUTF8String:value.c_str()];
+        }
+
+        // Extract Manufacturer
+        if (dataset->findAndGetOFString(DCM_Manufacturer, value).good()) {
+            metadata[@"Manufacturer"] = [NSString stringWithUTF8String:value.c_str()];
+        }
+
+        // Extract Series Number (Se)
+        Sint32 seriesNumber = 0;
+        if (dataset->findAndGetSint32(DCM_SeriesNumber, seriesNumber).good()) {
+            metadata[@"SeriesNumber"] = @(seriesNumber);
+        }
+
+        // Extract Total Number of Images (e.g. Im: 1/94)
+        Sint32 imagesInAcquisition = 0;
+        if (dataset->findAndGetSint32(DCM_ImagesInAcquisition, imagesInAcquisition).good()) {
+            metadata[@"ImagesInAcquisition"] = @(imagesInAcquisition);
+        }
+        
         // Extract Instance Number
         int instanceNumber = 0;
         
         if (dataset->findAndGetSint32(DCM_InstanceNumber, instanceNumber).good()) {
             metadata[@"InstanceNumber"] = @(instanceNumber);
         }
+        
     } else {
         NSLog(@"❌ Error: Cannot load DICOM file at %@", filePath);
         return nil;

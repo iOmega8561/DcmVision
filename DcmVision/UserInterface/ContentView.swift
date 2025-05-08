@@ -5,29 +5,35 @@
 //  Created by Giuseppe Rocco on 13/03/25.
 //
 
-import SwiftUI
+import Tools4SwiftUI
 
 import UniformTypeIdentifiers
 
 struct ContentView: View {
     
     @State private var fileImporterIsPresented: Bool = false
-    @State private var error: Error? = nil
-    
-    @State private var dataSets: [DicomDataSet] = []
     @State private var selection: DicomDataSet? = nil
     
     @Environment(\.openWindow) private var openWindow
+    @Environment(AppModel.self) private var appModel
     
     var body: some View {
         
         NavigationSplitView {
             
-            List(dataSets) { dataSet in
+            List(appModel.dataSets, selection: $selection) { dataSet in
                 
-                Button(dataSet.name) {
-                    selection = dataSet
-                }
+                RowLabel(dataSet: dataSet)
+                    .tag(dataSet)
+                    .contextMenu {
+                        AsyncButton("Delete", systemImage: "trash", role: .destructive) {
+                            try await appModel.removeDataSet(dataSet)
+                            
+                            if selection == dataSet {
+                                selection = nil
+                            }
+                        }
+                    }
             }
             .toolbar {
                 ToolbarItem(placement: .automatic) {
@@ -41,9 +47,16 @@ struct ContentView: View {
         } detail: {
             
             if let selection {
-                GridContainerView(dataSet: selection)
-                    .navigationTitle(selection.name)
+                GridView(dataSet: selection)
                     .id(selection.id)
+                    .navigationTitle({
+                        if case .success(let metadata) = selection.files.first?.metadata,
+                           let patientName = metadata.patientName,
+                           let studyProcedure = metadata.studyProcedure {
+                            return patientName + " - " + studyProcedure
+                            
+                        } else { return selection.id.uuidString }
+                    }())
                 
             } else {
                 
@@ -51,36 +64,25 @@ struct ContentView: View {
                     .font(.largeTitle)
                     .multilineTextAlignment(.center)
                     .padding(.vertical)
+                
+                Text("Choose a folder containing DICOM files to begin.")
+                    .foregroundColor(.secondary)
+                
+                Text("Once loaded, select a scan from the list to view its image, metadata, and 3D reconstruction.")
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.secondary)
             }
         }
-        
-        .alert("Error", isPresented: .constant(error != nil)) {
-            Button("OK") {
-                error = nil
-            }
-            
-        } message: {
-            Text(error?.localizedDescription ?? "Error")
-        }
-        
-        .fileImporter(
+        .asyncFileImporter(
             isPresented: $fileImporterIsPresented,
             allowedContentTypes: [.folder],
-            allowsMultipleSelection: false
-        ) { result in
-            
-            guard let urls = try? result.get(),
-                  let directoryURL = urls.first else { return }
-           
-            do {
-                let dataSet = try DicomDataSet.createNew(
-                    originURL: directoryURL
-                )
-                
-                dataSets.append(dataSet)
-                selection = dataSet
-                
-            } catch { self.error = error }
+        ) {
+            guard let directoryURL = $0.first else {
+                return
+            }
+            selection = try await appModel.addDataSet(
+                from: directoryURL
+            )
         }
     }
 }
