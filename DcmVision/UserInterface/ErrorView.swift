@@ -22,27 +22,13 @@ struct ErrorView: View {
                 .foregroundStyle(.yellow)
             
             if let errorDescription {
-                Spacer()
-                    .frame(height: 50)
                 
                 Text(errorDescription)
                     .font(.title3)
                     .multilineTextAlignment(.center)
-                    .padding(.horizontal)
+                    .padding([.horizontal, .top])
             }
         }
-        .frame(
-            minWidth: errorDescription != nil ? 400 : nil,
-            idealWidth: errorDescription != nil ? 400 : nil,
-            maxWidth: 400,
-            minHeight: errorDescription != nil ? 300 : nil,
-            idealHeight: errorDescription != nil ? 300 : nil
-        )
-        .frame(
-            width: errorDescription == nil ? 150 : nil,
-            height: errorDescription == nil ? 150 : nil
-        )
-        .glassBackgroundEffect()
     }
     
     init(error: String) { self.errorDescription = error }
