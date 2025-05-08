@@ -50,6 +50,10 @@ The project has recently been refactored to allow the usage of **any** DICOM Dat
 
 Build the Xcode project and enjoy!
 
+## Privacy
+
+DcmVision respects your privacy and does not collect, store, or transmit any personal information or user data. The application operates fully offline in a sandboxed environment, ensuring a secure, private learning experience.
+
 ## Contributors
 
 - [Giuseppe Rocco](https://github.com/iOmega8561)[:](https://github.com/iOmega8561) Dependencies setup and initial project package
