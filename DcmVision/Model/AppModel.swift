@@ -5,22 +5,20 @@
 //  Created by Giuseppe Rocco on 02/05/25.
 //
 
-import Combine
+import SwiftUI
 import RealityKit
 
-@Observable
+@MainActor @Observable
 final class AppModel: Sendable {
     
-    @MainActor
     private(set) var entities: [Entity] = []
     
-    @MainActor
     private(set) var dataSets: [DicomDataSet] = []
     
-    @MainActor
     var immersiveSpaceState: ImmersiveSpaceState = .closed
     
-    @MainActor
+    var realityContent: RealityViewContent?
+    
     func bootstrap() {
         guard let cachedContent = try? FileManager.default.contentsOfDirectory(
             at: .cacheDirectory,
@@ -37,30 +35,50 @@ final class AppModel: Sendable {
         }
     }
     
-    @Sendable @discardableResult
-    func addDataSet(from origin: URL) async throws -> DicomDataSet {
+    @discardableResult
+    func addDataSet(from origin: URL) throws -> DicomDataSet {
         let newDataSet = try DicomDataSet.createNew(originURL: origin)
         
-        await MainActor.run {
-            dataSets.append(newDataSet)
-        }
-        
+        dataSets.append(newDataSet)
         return newDataSet
     }
     
-    @Sendable
-    func removeDataSet(_ dataSet: DicomDataSet) async throws {
+    func removeDataSet(_ dataSet: DicomDataSet) throws {
         try FileManager.default.removeItem(at: dataSet.url)
         
-        await MainActor.run {
-            dataSets.removeAll(where: { $0 == dataSet })
-        }
+        dataSets.removeAll(where: { $0 == dataSet })
         
-        await removeDicom3DEntity(using: dataSet)
+        try removeDicom3DEntity(using: dataSet)
     }
     
-    @Sendable
+    func setEntityGestures(for dataSet: DicomDataSet, enabled: Bool) throws {
+        let entity = entities.first(where: { $0.name == dataSet.id.uuidString })
+        
+        guard let entity else {
+            throw DcmVisionError.entityNotFound
+        }
+        entity.setDirectGestures(enabled: enabled)
+    }
+    
+    func removeDicom3DEntity(using dataSet: DicomDataSet) throws {
+        let entity = entities.first(where: { $0.name == dataSet.id.uuidString })
+        
+        guard let entity else {
+            throw DcmVisionError.entityNotFound
+        }
+        
+        realityContent?.remove(entity)
+        entities.removeAll(where: { $0.name == dataSet.id.uuidString })
+    }
+    
+    @Sendable nonisolated
     func addDicom3DEntity(using dataSet: DicomDataSet) async throws {
+        
+        try await MainActor.run {
+            guard !entities.contains(where: { $0.name == dataSet.id.uuidString }) else {
+                throw DcmVisionError.entityAlreadyExists
+            }
+        }
         
         let isoSurface = try dataSet.isoSurface(huThreshold: 300)
         let modelEntity = try await ModelEntity.fromIsoSurface(at: isoSurface)
@@ -68,14 +86,6 @@ final class AppModel: Sendable {
         await MainActor.run {
             modelEntity.name = dataSet.id.uuidString
             entities.append(modelEntity)
-        }
-    }
-    
-    @Sendable
-    func removeDicom3DEntity(using dataSet: DicomDataSet) async {
-        
-        await MainActor.run {
-            entities.removeAll(where: { $0.name == dataSet.id.uuidString })
         }
     }
 }
