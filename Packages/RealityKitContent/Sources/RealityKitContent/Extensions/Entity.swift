@@ -32,20 +32,10 @@ public extension Entity {
     }
     
     func setDirectGestures(enabled: Bool) {
-        
-        guard var component = self.gestureComponent else {
-            
-            #if DEBUG
-            print("No gesture component found on entity with ID: \(self.id)")
-            #endif
-            
-            return
-        }
-        
-        component.canDrag = enabled
-        component.canRotate = enabled
-        component.canScale = enabled
-        component.pivotOnDrag = enabled
-        component.preserveOrientationOnPivotDrag = enabled
+        self.gestureComponent?.canDrag = enabled
+        self.gestureComponent?.canRotate = enabled
+        self.gestureComponent?.canScale = enabled
+        self.gestureComponent?.pivotOnDrag = enabled
+        self.gestureComponent?.preserveOrientationOnPivotDrag = enabled
     }
 }

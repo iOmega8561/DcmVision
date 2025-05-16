@@ -27,7 +27,7 @@ struct ContentView: View {
                     .tag(dataSet)
                     .contextMenu {
                         AsyncButton("Delete", systemImage: "trash", role: .destructive) {
-                            try await appModel.removeDataSet(dataSet)
+                            try appModel.removeDataSet(dataSet)
                             
                             if selection == dataSet {
                                 selection = nil
@@ -49,14 +49,7 @@ struct ContentView: View {
             if let selection {
                 GridView(dataSet: selection)
                     .id(selection.id)
-                    .navigationTitle({
-                        if case .success(let metadata) = selection.files.first?.metadata,
-                           let patientName = metadata.patientName,
-                           let studyProcedure = metadata.studyProcedure {
-                            return patientName + " - " + studyProcedure
-                            
-                        } else { return selection.id.uuidString }
-                    }())
+                    .navigationTitle(selection.name)
                 
             } else {
                 
@@ -80,9 +73,8 @@ struct ContentView: View {
             guard let directoryURL = $0.first else {
                 return
             }
-            selection = try await appModel.addDataSet(
-                from: directoryURL
-            )
+            
+            selection = try appModel.addDataSet(from: directoryURL)
         }
     }
 }

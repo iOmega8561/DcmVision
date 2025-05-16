@@ -71,7 +71,7 @@ final class DicomFile {
     
     /// Initializes a new `DicomFile` with a file URL.
     /// - Parameter url: The file URL of the DICOM file.
-    private init(url: URL) {
+    init(url: URL) {
         self.url = url
     }
 }
@@ -101,5 +101,22 @@ extension DicomFile: Hashable {
     /// Hashes the URL of the DICOM file into the given hasher.
     func hash(into hasher: inout Hasher) {
         url.hash(into: &hasher)
+    }
+}
+
+// MARK: - Codable
+
+extension DicomFile: Codable {
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(url)
+    }
+    
+    convenience init(from decoder: any Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let url = try container.decode(URL.self)
+        
+        self.init(url: url)
     }
 }

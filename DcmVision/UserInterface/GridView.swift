@@ -16,6 +16,7 @@ struct GridView: View {
                                    GridItem(.flexible()) ]
     
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+    @Environment(\.openWindow) private var openWindow
     @Environment(AppModel.self) private var appModel
     
     @State private var metadataIsShown: Bool = false
@@ -71,7 +72,10 @@ struct GridView: View {
                         }
                         
                         try await appModel.addDicom3DEntity(using: dataSet)
+                        
+                        openWindow(id: "controlPanel", value: dataSet)
                     }
+                    .disabled(appModel.entities.contains(where: { $0.name == dataSet.id.uuidString }))
                 }
             }
         }

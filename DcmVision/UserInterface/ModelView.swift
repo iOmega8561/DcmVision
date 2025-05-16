@@ -15,7 +15,11 @@ struct ModelView: View {
     
     var body: some View {
         
-        RealityView { _ in } update: { content in
+        RealityView { content in
+            
+            appModel.realityContent = content
+            
+        } update: { content in
             
             for entity in appModel.entities {
                 content.add(entity)
