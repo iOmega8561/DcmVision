@@ -75,6 +75,7 @@ struct GridView: View {
                         
                         openWindow(id: "controlPanel", value: dataSet)
                     }
+                    .disabled(appModel.entities.contains(where: { $0.name == dataSet.id.uuidString }))
                 }
             }
         }
