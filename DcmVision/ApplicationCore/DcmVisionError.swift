@@ -15,4 +15,6 @@ enum DcmVisionError: Error {
     case invalidImage
     case failedToGenerateModel
     case conversionToUSDFailed
+    case entityNotFound
+    case entityAlreadyExists
 }

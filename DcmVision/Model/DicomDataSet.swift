@@ -10,7 +10,7 @@
 /// `DicomDataSet` is used to encapsulate metadata and file references for a
 /// DICOM directory copied into the app's cache. It conforms to `Identifiable`,
 /// `Hashable`, and `Codable`, making it easy to store, compare, and use in SwiftUI views.
-struct DicomDataSet: Identifiable {
+struct DicomDataSet: Identifiable, Codable {
     
     /// Creates a new `DicomDataSet` by copying the contents of a source directory to the cache.
     ///
@@ -44,6 +44,16 @@ struct DicomDataSet: Identifiable {
     /// The full URL to the cached location of the dataset.
     var url: URL {
         .cacheDirectory.appendingPathComponent(id.uuidString)
+    }
+    
+    /// The display name of this dataset
+    var name: String {
+        if case .success(let metadata) = files.first?.metadata,
+           let patientName = metadata.patientName,
+           let studyProcedure = metadata.studyProcedure {
+            return patientName + " - " + studyProcedure
+            
+        } else { return id.uuidString }
     }
     
     /// Generates a 3D isosurface representation from the DICOM dataset using a given HU threshold.
