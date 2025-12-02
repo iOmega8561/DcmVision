@@ -1,6 +1,6 @@
 # DcmVision
 
-DcmVision is a sample project for visionOS that demonstrates how to handle and visualize DICOM files, including generation of a 3D model for scans acquired using CT and MRI. The project serves as a reference implementation for integrating DICOM imaging into visionOS applications. Additionally, it provides an example of bridging standard Clang technologies to the Apple ecosystem by using Objective-C++.
+DcmVision is an advanced visionOS project that demonstrates how to handle and visualize DICOM files, including generation of a 3D model for scans acquired using CT and MRI. The project serves as a reference implementation for integrating DICOM imaging into visionOS applications. Additionally, it provides an example of bridging standard Clang technologies to the Apple ecosystem by using Objective-C++.
 
 This project requires some setup steps, which are outlined below.
 
@@ -53,4 +53,5 @@ Build the Xcode project and enjoy!
 ## Privacy
 
 DcmVision respects your privacy and does not collect, store, or transmit any personal information or user data. The application operates fully offline in a sandboxed environment, ensuring a secure, private learning experience.
+
 
