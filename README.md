@@ -52,6 +52,7 @@ Build the Xcode project and enjoy!
 
 ## Privacy
 
-DcmVision respects your privacy and does not collect, store, or transmit any personal information or user data. The application operates fully offline in a sandboxed environment, ensuring a secure, private learning experience.
+DcmVision respects your privacy and does not collect, store, or transmit any personal information or user data. The application operates fully offline in a sandboxed environment.
+
 
 
